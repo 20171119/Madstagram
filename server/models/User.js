@@ -18,15 +18,14 @@ const userSchema = mongoose.Schema({
         type: String,
         minglength: 5
     },
-    lastname: {
-        type:String,
-        maxlength: 50
-    },
     role : {
         type:Number,
         default: 0 
     },
     image: String,
+    semester: {
+        type: String
+    },
     token : {
         type: String,
     },
@@ -64,8 +63,8 @@ userSchema.methods.comparePassword = function(plainPassword,cb){
 
 userSchema.methods.generateToken = function(cb) {
     var user = this;
-    console.log('user',user)
-    console.log('userSchema', userSchema)
+    // console.log('user',user)
+    // console.log('userSchema', userSchema)
     var token =  jwt.sign(user._id.toHexString(),'secret')
     var oneHour = moment().add(1, 'hour').valueOf();
 
