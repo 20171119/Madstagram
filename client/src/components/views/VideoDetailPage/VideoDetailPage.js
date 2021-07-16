@@ -1,7 +1,16 @@
-import React from 'react'
-import {Row, Col} from 'antd'
+import React, { useEffect, useState } from 'react'
+import { List, Avatar, Row, Col } from 'antd';
+import axios from 'axios';
 
-function VideoDetailPage() {
+function VideoDetailPage(props) {
+
+    const photoId
+    const [Video, setVideo] = useState([])
+
+    useEffect(() => {
+        axios.post('/api/video/getVideo')
+    })
+
     return (
         
     )
