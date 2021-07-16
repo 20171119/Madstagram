@@ -40,8 +40,9 @@ router.post("/uploadImage", auth, (req, res) => {
 
 module.exports = router;
 
-router.post("/uploadPosts", auth, (req, res) => {
-
+// auth 빠짐
+router.post("/uploadPosts", (req, res) => {
+    console.log("/posts/uploadPosts")
     //save all the data we got from the client into the DB 
     const post = new Post(req.body)
 
@@ -52,9 +53,10 @@ router.post("/uploadPosts", auth, (req, res) => {
 
 });
 
-router.post("/getPosts", auth, (req, res) => {
+// auth 빠짐
+router.post("/getPosts", (req, res) => {
 
-    Post.find()
+    Post.find({ 'semester': req.body.semester })
         .populate("writer")
         .exec((err, posts) => {
             if(err) return res.status(400).json({success: false})
@@ -63,30 +65,51 @@ router.post("/getPosts", auth, (req, res) => {
 
 });
 
-// //?id=${productId}&type=single
-// // //id=12121212,121212,1212121   type=array 
-// router.get("/posts_by_id", (req, res) => {
-//     let type = req.query.type
-//     let postIds = req.query.id
+router.get("/post_by_id", (req, res) => {
+    console.log('post_by_id')
+    let postIds = req.query.id
 
-//     console.log("req.query.id", req.query.id)
+    //we need to find the product information that belong to product Id 
+    Post.findOne({"_id": postIds})
+        .populate('writer')
+        .exec((err, post) => {
+            if (err) return res.status(400).send(err)
+            return res.status(200).send(post)
+        })
+});
 
-//     // if (type === "array") {
-//     //     let ids = req.query.id.split(',');
-//     //     productIds = [];
-//     //     productIds = ids.map(item => {
-//     //         return item
-//     //     })
-//     // }
+router.delete("/delete", (req, res) => {
+    console.log('post_delete')
+    let postIds = req.body._id
+    console.log(postIds)
+    Post.findOneAndDelete({"_id": postIds}, (err, post) => {
+        if (err) return res.status(400).send(err)
+        return res.status(200).send(post)
+    })
+})
 
-//     // console.log("productIds", productIds)
+router.put("/update", (req, res) => {
 
+    let filter = {
+        "_id": req.body._id
+    }
 
-//     //we need to find the product information that belong to product Id 
-//     Post.find({ '_id': { $in: postIds } })
-//         .populate('writer')
-//         .exec((err, post) => {
-//             if (err) return res.status(400).send(err)
-//             return res.status(200).send(product)
-//         })
-// });
+    let update = {
+        "title": req.body.title,
+        "content": req.body.content
+    }
+
+    Post.findOneAndUpdate(
+        filter,
+        update,
+        {
+            new: true
+        },
+        (err, post) => {
+            if (err) return res.status(400).send(err)
+            return res.status(200).send(post)
+        }
+    )
+})
+
+module.exports = router;

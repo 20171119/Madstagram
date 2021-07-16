@@ -23,6 +23,9 @@ const userSchema = mongoose.Schema({
         default: 0 
     },
     image: String,
+    semester: {
+        type: String
+    },
     token : {
         type: String,
     },
