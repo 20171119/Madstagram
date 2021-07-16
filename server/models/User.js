@@ -18,11 +18,7 @@ const userSchema = mongoose.Schema({
         type: String,
         minglength: 5
     },
-    lastname: {
-        type:String,
-        maxlength: 50
-    },
-    role : {
+    role : {            // semester로 바꿈
         type:Number,
         default: 0 
     },
