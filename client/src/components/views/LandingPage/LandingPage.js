@@ -15,15 +15,14 @@ function LandingPage() {
 
 
     useEffect(() => {
-        getProducts()
+        getPosts()
 
     }, [])
 
-    const getProducts = () => {
+    const getPosts = () => {
         Axios.post('/api/posts/getPosts')
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
                     setPosts(response.data.posts)
                     console.log(Posts.length);
                 } else {

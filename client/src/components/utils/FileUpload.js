@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Dropzone from 'react-dropzone';
-import Icon from '@ant-design/icons';
+import {
+    PlusOutlined
+} from '@ant-design/icons';
 import Axios from 'axios';
 function FileUpload(props) {
 
@@ -17,7 +19,7 @@ function FileUpload(props) {
         Axios.post('/api/posts/uploadImage', formData, config)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data);
+                    // console.log(response.data);
                     setImages([...Images, response.data.image])
                     props.refreshFunction([...Images, response.data.image])
 
@@ -53,7 +55,7 @@ function FileUpload(props) {
                         {...getRootProps()}
                     >
                         <input {...getInputProps()} />
-                        <Icon type="plus" style={{ fontSize: '3rem' }} />
+                        <PlusOutlined style={{ fontSize: '3rem' }} />
 
                     </div>
                 )}

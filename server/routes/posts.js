@@ -65,16 +65,16 @@ router.post("/getPosts", (req, res) => {
 
 });
 
-router.get("/post_by_id", (req, res) => {
+router.post("/post_by_id", (req, res) => {
     console.log('post_by_id')
-    let postIds = req.query.id
-
+    let postId = req.body.postId
+    console.log(postId)
     //we need to find the product information that belong to product Id 
-    Post.findOne({"_id": postIds})
+    Post.findOne({"_id": postId})
         .populate('writer')
         .exec((err, post) => {
             if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+            return res.status(200).json({success: true, post})
         })
 });
 
