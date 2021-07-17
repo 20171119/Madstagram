@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Avatar } from 'antd';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
@@ -40,6 +40,12 @@ function RightMenu(props) {
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>
         </Menu.Item>
+        <Menu.Item>
+          <Avatar key="profile">
+            <a href={`/users/${user.userData?._id}`} />
+          </Avatar>
+        </Menu.Item>
+        
       </Menu>
     )
   }

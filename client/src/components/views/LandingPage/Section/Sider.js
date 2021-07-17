@@ -16,10 +16,14 @@ function Slider() {
                 style={{ height: '100%' }}
             >
                 <Menu.Item key="sub1" >
-                    {}
+                    2021s
                 </Menu.Item>
-                <Menu.Item key="sub2" />
-                <Menu.Item key="sub3" />
+                <Menu.Item key="sub2" >
+                    2020w
+                </Menu.Item>
+                <Menu.Item key="sub3" >
+                    2020s
+                </Menu.Item>
             </Menu>
         </Sider>
     )

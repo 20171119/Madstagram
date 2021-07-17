@@ -78,6 +78,19 @@ router.post("/post_by_id", (req, res) => {
         })
 });
 
+router.post("/posts_by_user", (req, res) => {
+    console.log('posts_by_user')
+    let userId = req.body.userId
+    console.log("in the posts_by_user" + userId)
+    //we need to find the product information that belong to product Id 
+    Post.find({"writer": userId})
+        .populate('writer')
+        .exec((err, posts) => {
+            if (err) return res.status(400).send(err)
+            return res.status(200).json({success: true, posts})
+        })
+});
+
 router.delete("/delete", (req, res) => {
     console.log('post_delete')
     let postIds = req.body._id
