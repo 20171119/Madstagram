@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "http-proxy-middleware": "^1.0.3"
+    "http-proxy-middleware": "^1.0.3",
+    "react-app-rewire-less": "^2.1.3"
   }
 }
