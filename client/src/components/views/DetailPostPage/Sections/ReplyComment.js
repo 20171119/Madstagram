@@ -22,7 +22,7 @@ function ReplyComment(props) {
         props.CommentLists.map((comment, index) => (
             <React.Fragment>
                 {comment.responseTo === parentCommentId &&
-                    <div style={{ width: '80%', marginLeft: '40px' }}>
+                    <div key={index} style={{ width: '80%', marginLeft: '40px' }}>
                         <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} deleteFunction={props.deleteFunction}/>
                         <ReplyComment CommentLists={props.CommentLists} parentCommentId={comment._id} postId={props.postId} 
                             refreshFunction={props.refreshFunction} deleteFunction={props.deleteFunction}/>
@@ -38,18 +38,15 @@ function ReplyComment(props) {
 
     return (
         <div>
-
             {ChildCommentNumber > 0 &&
                 <p style={{ fontSize: '14px', margin: 0, color: 'gray' }}
                     onClick={handleChange} >
                     View {ChildCommentNumber} more comment(s)
              </p>
             }
-
             {OpenReplyComments &&
                 renderReplyComment(props.parentCommentId)
             }
-
         </div>
     )
 }

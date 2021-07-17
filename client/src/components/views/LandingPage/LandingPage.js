@@ -33,7 +33,7 @@ function LandingPage() {
 
     const renderCards = Posts.map((post, index) => {
 
-        return <Col>
+        return <Col key={index}>
             <Card 
                 title={
                 <div><Avatar src="post.writer.image"/></div>, <div>{post.writer.name}</div>}

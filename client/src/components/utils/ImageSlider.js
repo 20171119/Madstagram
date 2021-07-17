@@ -8,7 +8,7 @@ function ImageSlider(props) {
                 {props.images.map((image, index) => (
                     <div key={index}>
                         <img style={{ maxWidth: '100%', maxHeight: 500, objectFit: 'contain' }}
-                            src={`http://192.249.18.171:80/${image}`} alt="postImage" />
+                            src={`http://192.249.18.120:80/${image}`} alt="postImage" />
                     </div>
                 ))}
             </Carousel>

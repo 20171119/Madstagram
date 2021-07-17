@@ -29,9 +29,6 @@ function NavBar() {
         <div className="menu_rigth">
           <RightMenu mode="horizontal" />
         </div>
-        <Button variant="contained" color="primary" onClick={showDrawer}>
-          Hello World
-        </Button>
         <Drawer
           title="Basic Drawer"
           placement="right"

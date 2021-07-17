@@ -57,7 +57,7 @@ function SingleComment(props) {
     }
 
     let actions = [];
-    if (props.comment.writer._id == user.userData._id) {
+    if (props.comment.writer?._id == user.userData?._id) {
         actions = [
             <Like comment commentId={props.comment._id} userId={localStorage.getItem('userId')} />,
             <span onClick={openReply} key="comment-basic-reply-to">Reply to </span>,

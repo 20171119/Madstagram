@@ -80,23 +80,24 @@ router.post("/post_by_id", (req, res) => {
 
 router.delete("/delete", (req, res) => {
     console.log('post_delete')
-    let postIds = req.body._id
-    console.log(postIds)
+    let postIds = req.body.postId
     Post.findOneAndDelete({"_id": postIds}, (err, post) => {
         if (err) return res.status(400).send(err)
-        return res.status(200).send(post)
+        return res.status(200).json({success: true, post})
     })
 })
 
 router.put("/update", (req, res) => {
 
+    console.log(req.body)
     let filter = {
-        "_id": req.body._id
+        "_id": req.body.postId
     }
 
     let update = {
         "title": req.body.title,
-        "content": req.body.content
+        "content": req.body.content,
+        "images": req.body.images
     }
 
     Post.findOneAndUpdate(
@@ -106,9 +107,12 @@ router.put("/update", (req, res) => {
             new: true
         },
         (err, post) => {
+            console.log('post/update')
+            console.log(post)
             if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+            return res.status(200).json({success: true, post})
         }
+        
     )
 })
 
