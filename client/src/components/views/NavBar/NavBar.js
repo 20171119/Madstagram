@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
-import { Drawer, Button} from 'antd';
+import { Drawer } from 'antd';
 import Icon from '@ant-design/icons';
 import './Sections/Navbar.css';
+import Button from '@material-ui/core/Button';
 
 function NavBar() {
   const [visible, setVisible] = useState(false)
@@ -17,7 +18,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
+    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '55px' }}>
       <div className="menu__logo">
         <a href="/">Logo</a>
       </div>
@@ -28,12 +29,8 @@ function NavBar() {
         <div className="menu_rigth">
           <RightMenu mode="horizontal" />
         </div>
-        <Button
-          className="menu__mobile-button"
-          type="primary"
-          onClick={showDrawer}
-        >
-          <Icon type="align-right" />
+        <Button variant="contained" color="primary" onClick={showDrawer}>
+          Hello World
         </Button>
         <Drawer
           title="Basic Drawer"

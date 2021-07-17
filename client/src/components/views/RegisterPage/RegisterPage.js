@@ -113,6 +113,7 @@ function RegisterPage(props) {
                   <div className="input-feedback">{errors.name}</div>
                 )}
               </Form.Item>
+              
               <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"

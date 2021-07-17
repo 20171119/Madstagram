@@ -6,9 +6,13 @@ import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
-import Footer from "./views/Footer/Footer";
 import UploadPage from "./views/UploadPage/UploadPage";
 import DetailPostPage from "./views/DetailPostPage/DetailPostPage";
+import { Layout, Menu } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -18,7 +22,7 @@ function App() {
   return (
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
-      <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
+      <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)', backgroundColor: '#fafafa' }}>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
@@ -27,7 +31,6 @@ function App() {
           <Route exact path="/posts/:postId" component={Auth(DetailPostPage, null)} />
         </Switch>
       </div>
-      <Footer />
     </Suspense>
   );
 }
