@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Col, Card, Row } from 'antd';
-import Icon from '@ant-design/icons';
 import ImageSlider from '../../utils/ImageSlider';
 
 const { Meta } = Card;
 
 function LandingPage() {
-
-    const [Posts, setPosts] = useState([])
-    // const [Skip, setSkip] = useState(0)
-    // const [Limit, setLimit] = useState(8)
-    // const [PostSize, setPostSize] = useState()
-    // const [SearchTerms, setSearchTerms] = useState("")
+    const [Posts, setPosts] = useState([]);
 
     useEffect(() => {
-        getProducts()
+        getPosts()
 
     }, [])
 
-    const getProducts = () => {
+    const getPosts = () => {
         Axios.post('/api/posts/getPosts')
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
                     setPosts(response.data.posts)
                     console.log(Posts.length);
                 } else {
@@ -51,10 +44,7 @@ function LandingPage() {
 
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
-            <div style={{ textAlign: 'center' }}>
-                <h2>  Let's Travel Anywhere  <Icon type="rocket" />  </h2>
-            </div>
-
+        
             {Posts.length === 0 ?
                 <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                     <h2>No post yet...</h2>
@@ -66,6 +56,8 @@ function LandingPage() {
                     </Row>
                 </div>
             }
+
+
         </div>
     )
 }

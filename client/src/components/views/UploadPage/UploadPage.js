@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Typography, Button, Form, message, Input} from 'antd';
-// import Icon from '@ant-design/icons';
 import FileUpload from '../../utils/FileUpload';
 import Axios from 'axios';
 
@@ -63,7 +62,6 @@ function UploadProductPage(props) {
 
                 {/* DropZone */}
                 <FileUpload refreshFunction={updateImages} />
-
                 <br />
                 <br />
                 <label>Title</label>

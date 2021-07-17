@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/posts/upload" component={Auth(UploadPage, true)} />
-          // <Route exact path="/posts/:postId" component={Auth(DetailPostPage, null)} />
+          <Route exact path="/posts/:postId" component={Auth(DetailPostPage, null)} />
         </Switch>
       </div>
       <Footer />
