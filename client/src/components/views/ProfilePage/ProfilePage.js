@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Col, Card, Row, Divider , Menu, Avatar, Empty, Button, Descriptions } from 'antd';
-import ImageSlider from '../../utils/ImageSlider';
+import ImageSlider2 from '../../utils/ImageSlider2';
 
 import { UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
@@ -51,24 +51,30 @@ function ProfilePage(props) {
     const renderCards = Posts.map((post, index) => {
 
         return <Col lg={8} md={8} xs={24}>
-                    <Card 
+                    {/* <Card 
                         key={index}
                         hoverable={true}
                         cover={<a href={`/posts/${post._id}`} > 
-                                <ImageSlider images={post.images} />
+                                <ImageSlider2 images={post.images} />
                             </a>}
                     >
-                    </Card>
+                    </Card> */}
+                    <a href={`/posts/${post._id}`} > 
+                        <ImageSlider2 images={post.images} />
+                    </a>
                 </Col>
     })
 
 
     return (
         <div style={{minWidth: '736px', marginLeft: '270px', marginRight: '270px'}}>
-            <div style={{marginBottom: '20px', marginTop: '30px'}} >
+            <div style={{marginBottom: '50px', marginTop: '50px'}} >
                 <Row >
                     <Col lg={8}>
-                        <Avatar size={100} icon={<UserOutlined/>} />
+                        <div align='center'>
+                            <Avatar size={120} icon={<UserOutlined/>} src={User.image} />
+                        </div>
+                        
                     </Col>
 
                     <Col lg={16}>
@@ -83,9 +89,9 @@ function ProfilePage(props) {
                 </Row>
             </div>
 
-            <Divider>Your Post</Divider>
+            <Divider>Your Posts</Divider>
 
-            <div style={{marginTop: '20px'}}>
+            <div style={{marginTop: '30px'}}>
                 {Posts.length === 0 ?
                     <Empty>
                         <Button type="primary" href="/posts/upload">Upload Post</Button>

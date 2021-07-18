@@ -8,20 +8,12 @@ import Button from '@material-ui/core/Button';
 function NavBar() {
   const [visible, setVisible] = useState(false)
 
-  const showDrawer = () => {
-    setVisible(true)
-  };
-
-  const onClose = () => {
-    setVisible(false)
-  };
-
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '54px', paddingLeft: '270px', paddingRight: '270px' }}>
+    <nav className="menu" style={{ position: 'fixed', zIndex: 10, width: '100%', height: '54px', paddingLeft: '270px', paddingRight: '270px' }}>
       <div className="menu__logo">
         <a href="/">Madstagram</a>
       </div>
-      <div >
+      <div align="right">
           <RightMenu />
       </div>
     </nav>

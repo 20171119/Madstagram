@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { Col, Card, Row, Layout, Menu, Avatar } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import Sider from './Sections/Sider'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { EditOutlined, EllipsisOutlined, MessageOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
 
 const { Meta } = Card;
 
@@ -37,19 +37,20 @@ function LandingPage() {
 
         return <Col key={index}>
             <Card 
-                title={<div style={{maxHeight: '30px'}}>
-                    <div style={{display: 'inline'}}><Avatar src={post.writer.image}/></div> 
-                    <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
+                title={<div style={{maxHeight: '30px'}}> 
+                    <a href={`/users/${post.writer._id}`} style={{color: 'black'}}>
+                        <div style={{display: 'inline'}}><Avatar src={post.writer.image}/></div> 
+                        <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
+                    </a>
                 </div>}
                 style={{ marginBottom: 24 }}
                 key={index}
                 hoverable={true}
                 actions={[
-                    <SettingOutlined key="setting" />,
-                    <EditOutlined key="edit" />,
-                    <EllipsisOutlined key="ellipsis" />,
+                    <HeartOutlined key="heart" />,
+                    <a href={`/posts/${post._id}`} ><MessageOutlined key="edit" /></a>
                 ]}
-                cover={<a href={`/posts/${post._id}`} > <ImageSlider images={post.images} /></a>}
+                cover={<ImageSlider images={post.images} />}
             >
                 <Meta
                     title={post.title}
@@ -67,7 +68,7 @@ function LandingPage() {
                 <Col xs={0} sm={0} md={6} lg={8}>
                     <Sider refreshFunction={updateSemester}/>
                 </Col>
-                <Col xs={24} sm={24} md={18} lg={16} style={{width: "450px" }}>
+                <Col xs={24} sm={24} md={18} lg={16} >
                     {Posts.length === 0 ?
                         <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                             <h2>No post yet...</h2>

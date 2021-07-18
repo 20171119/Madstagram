@@ -1,13 +1,13 @@
 import React from 'react'
 import { Carousel } from 'antd';
 
-function ImageSlider(props) {
+function ImageSlider2(props) {
     return (
         <div>
             <Carousel autoplay>
                 {props.images.map((image, index) => (
                     <div>
-                        <img style={{width: '100%', maxHeight: '400px', objectFit: 'contain'}}
+                        <img style={{width: '100%', maxHeight: '200px', objectFit: 'contain'}}
                         src={`http://192.249.18.171:80/${image}`} alt="postImage" />
                     </div>
 
@@ -18,4 +18,4 @@ function ImageSlider(props) {
     )
 }
 
-export default ImageSlider
+export default ImageSlider2

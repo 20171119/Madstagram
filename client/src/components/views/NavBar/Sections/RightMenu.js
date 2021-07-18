@@ -5,6 +5,7 @@ import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { FormOutlined } from '@ant-design/icons';
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -18,6 +19,17 @@ function RightMenu(props) {
       }
     });
   };
+
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a href={`/users/${user.userData?._id}`} >Profile</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a style={{color: 'red'}} onClick={logoutHandler}>Logout</a>
+      </Menu.Item>
+    </Menu>
+  )
 
   if (user.userData && !user.userData.isAuth) {
     return (
@@ -33,18 +45,12 @@ function RightMenu(props) {
   } else {
     return (
         <div style={{marginTop: '10px'}}>
-          <Button type="text">
-            <a href="/posts/upload">Upload</a>
-          </Button>
-          {/* <Dropdown overlay={}>
-
-          </Dropdown> */}
-          <Button type="text">
-            <a onClick={logoutHandler}>Logout</a>
-          </Button>
-          <a href={`/users/${user.userData?._id}`} >
-            <Avatar style={{marginLeft: '5px'}} key="profile" src={user.image} />
+          <a href="/posts/upload">
+            <Avatar size='large' style={{backgroundColor: '#ffffff', color: 'black'}} icon={<FormOutlined />} />
           </a>
+          <Dropdown overlay={menu}>
+            <Avatar style={{marginLeft: '5px'}} key="profile" src={user.userData?.image} />
+          </Dropdown>
         </div>
     )
   }
