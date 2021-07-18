@@ -19,21 +19,36 @@ router.post("/create", (req, res) => {
         "postsNum": 0
     }
 
-    newSemester.save((err, semester) => {
+    const semester = new Semester(newSemester);
+
+
+    semester.save((err, semester) => {
         if (err) return res.status(400).json({ success: false, err })
-        return res.status(200).json({ success: true, semseter })
+        return res.status(200).json({ success: true, semester })
     })
 
 });
 
+router.post("/getSemesters", (req, res) => {
+    console.log("/semester/getSemesters")
+    Semester.find()
+        .populate("writer")
+        .exec((err, semesters) => {
+            if(err) return res.status(400).json({success: false})
+            return res.status(200).json({success: true, semesters})
+        })
+
+});
+
+
 // auth 빠짐
 router.post("/getSemester", (req, res) => {
 
-    Post.find({ 'semester': req.body.semester })
+    Semester.find({ 'semester': req.body.semester })
         .populate("writer")
-        .exec((err, posts) => {
+        .exec((err, semester) => {
             if(err) return res.status(400).json({success: false})
-            return res.status(200).json({success: true, posts})
+            return res.status(200).json({success: true, semester})
         })
 
 });
@@ -42,9 +57,9 @@ router.delete("/delete", (req, res) => {
     console.log('post_delete')
     let postIds = req.body._id
     console.log(postIds)
-    Post.findOneAndDelete({"_id": postIds}, (err, post) => {
+    Semester.findOneAndDelete({"_id": postIds}, (err, semester) => {
         if (err) return res.status(400).send(err)
-        return res.status(200).send(post)
+        return res.status(200).send(semester)
     })
 })
 
@@ -59,15 +74,15 @@ router.put("/update", (req, res) => {
         "content": req.body.content
     }
 
-    Post.findOneAndUpdate(
+    Semester.findOneAndUpdate(
         filter,
         update,
         {
             new: true
         },
-        (err, post) => {
+        (err, semester) => {
             if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+            return res.status(200).send(semester)
         }
     )
 })

@@ -17,11 +17,13 @@ router.get("/auth", auth, (req, res) => {
         name: req.user.name,
         role: req.user.role,
         image: req.user.image,
+        semester: req.user.semester
     });
 });
 
 router.post("/register", (req, res) => {
-
+    console.log('/user/register')
+    console.log(req.body)
     const user = new User(req.body);
 
     user.save((err, doc) => {

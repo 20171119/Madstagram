@@ -37,6 +37,7 @@ function UploadPage(props) {
             title: TitleValue,
             content: ContentValue,
             images: Images,
+            semester: props.user.userData.semester
         }
 
         Axios.post('/api/posts/uploadPosts', variables)

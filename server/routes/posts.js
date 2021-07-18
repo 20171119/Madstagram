@@ -45,7 +45,7 @@ router.post("/uploadPosts", (req, res) => {
     console.log("/posts/uploadPosts")
     //save all the data we got from the client into the DB 
     const post = new Post(req.body)
-
+    console.log(req.body);
     post.save((err) => {
         if (err) return res.status(400).json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -55,10 +55,11 @@ router.post("/uploadPosts", (req, res) => {
 
 // auth 빠짐
 router.post("/getPosts", (req, res) => {
-
+    console.log("/posts/getPosts");
     Post.find({ 'semester': req.body.semester })
         .populate("writer")
         .exec((err, posts) => {
+            console.log(posts);
             if(err) return res.status(400).json({success: false})
             return res.status(200).json({success: true, posts})
         })

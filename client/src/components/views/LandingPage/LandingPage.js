@@ -3,32 +3,34 @@ import Axios from 'axios';
 import { Col, Card, Row, Layout, Menu, Avatar } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import Sider from './Sider'
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
-import { UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-
-const { SubMenu } = Menu;
 const { Meta } = Card;
 
 function LandingPage() {
-
     const [Posts, setPosts] = useState([])
+    const [Semester, setSemester] = useState("2021S")
 
-
+    const variable = {
+        semester: Semester
+    }
     useEffect(() => {
-        getPosts()
-
-    }, [])
-
-    const getPosts = () => {
-        Axios.post('/api/posts/getPosts')
+        console.log("useEffect")
+        Axios.post('/api/posts/getPosts', variable)
             .then(response => {
+                console.log("getPosts");
                 if (response.data.success) {
                     setPosts(response.data.posts)
-                    console.log(Posts.length);
                 } else {
                     alert('Failed to fectch product datas')
                 }
             })
+
+    }, [Semester])
+
+    const updateSemester = (selectSemester) => {
+        setSemester(selectSemester)
+        console.log("updateSemester");
     }
 
     const renderCards = Posts.map((post, index) => {
@@ -61,7 +63,7 @@ function LandingPage() {
         <div style={{ width: '70%', margin: '3rem auto' }}>
             <Row>
                 <Col xs={0} sm={0} md={6} lg={8}>
-                    <Sider />
+                    <Sider refreshFunction={updateSemester}/>
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={16} style={{width: "450px" }}>
                     {Posts.length === 0 ?
