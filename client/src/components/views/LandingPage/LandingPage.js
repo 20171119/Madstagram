@@ -38,7 +38,7 @@ function LandingPage() {
         return <Col key={index}>
             <Card 
                 title={<div style={{maxHeight: '30px'}}>
-                    <div style={{display: 'inline'}}><Avatar src={post.writer.image}/></div> 
+                    <div style={{display: 'inline'}}><Avatar src={`http://192.249.18.120:80/${post.writer.image}`}/></div> 
                     <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
                 </div>}
                 style={{ marginBottom: 24 }}
@@ -67,7 +67,7 @@ function LandingPage() {
                 <Col xs={0} sm={0} md={6} lg={8}>
                     <Sider refreshFunction={updateSemester}/>
                 </Col>
-                <Col xs={24} sm={24} md={18} lg={16} style={{width: "450px" }}>
+                <Col xs={24} sm={24} md={18} lg={16} style={{width: "400px" }}>
                     {Posts.length === 0 ?
                         <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                             <h2>No post yet...</h2>

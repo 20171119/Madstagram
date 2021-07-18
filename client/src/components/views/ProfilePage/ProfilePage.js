@@ -68,7 +68,7 @@ function ProfilePage(props) {
             <div style={{marginBottom: '20px', marginTop: '30px'}} >
                 <Row >
                     <Col lg={8}>
-                        <Avatar size={100} icon={<UserOutlined/>} />
+                        <Avatar size={100} src={`http://192.249.18.120:80/${User.image}`} />
                     </Col>
 
                     <Col lg={16}>

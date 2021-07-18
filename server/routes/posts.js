@@ -28,7 +28,8 @@ var upload = multer({ storage: storage }).single("file")
 //             Post
 //=================================
 
-router.post("/uploadImage", auth, (req, res) => {
+router.post("/uploadImage", (req, res) => {
+    console.log("uploadImage")
     upload(req, res, err => {
         if (err) {
             return res.json({ success: false, err })

@@ -4,7 +4,7 @@ import PostImage from './Sections/PostImage';
 import PostInfo from './Sections/PostInfo';
 import Comments from './Sections/Comments.js'
 // import PostButton from './Sections/PostButton.js'
-import { Row, Col, Menu} from 'antd';
+import { Row, Col, Button} from 'antd';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import UpdatePage from '../UpdatePage/UpdatePage';
@@ -81,10 +81,10 @@ function DetailPostPage(props) {
             </div>
             <br />
                 {Posts.writer?._id === user.userData?._id && VisibleBtn &&
-                    <button onClick={deletePost}>Delete</button>
+                    <Button onClick={deletePost}>Delete</Button>
                 }
                 {Posts.writer?._id === user.userData?._id && VisibleBtn &&
-                    <button onClick={updatePost}>Update</button>
+                    <Button onClick={updatePost}>Update</Button>
                 }
                 {!OpenUpdate && (
                     <Row gutter={[16, 16]} >

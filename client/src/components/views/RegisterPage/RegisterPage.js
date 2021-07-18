@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
+import FileUpload2 from '../../utils/FileUpload2';
 
 import {
   Form,
@@ -39,8 +40,9 @@ function RegisterPage(props) {
   const dispatch = useDispatch();
   const [Semesters, setSemesters] = useState([])
   const [usrSem, setusrSem] = useState("")
+  const [Images, setImages] = useState("")
 
-    useEffect(() => {
+  useEffect(() => {
         getSemesters();
     }, [])
 
@@ -63,6 +65,10 @@ function RegisterPage(props) {
   const renderSemesters = Semesters.map((semester, index) => {
     return <option key={index} value={semester.semester}>{semester.semester}</option>
   })
+
+  const updateImages = (newImages) => {
+    setImages(newImages)
+  }
 
   return (
 
@@ -93,13 +99,14 @@ function RegisterPage(props) {
             email: values.email,
             password: values.password,
             name: values.name,
-            image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
+            image: Images,
             semester: usrSem
           };
 
           console.log("A",dataToSubmit)
 
           dispatch(registerUser(dataToSubmit)).then(response => {
+            console.log("B", response.payload)
             if (response.payload.success) {
               props.history.push("/login");
             } else {
@@ -127,7 +134,9 @@ function RegisterPage(props) {
           <div className="app">
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
-
+              <Form.Item label="Image" required>
+                <FileUpload2 refreshFunction={updateImages} />
+              </Form.Item>
               <Form.Item required label="Name">
                 <Input
                   id="name"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Comment, Avatar, Button, Input } from 'antd';
+import { Comment, Avatar, Button, Input, Image} from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import Like from './Like';
@@ -74,10 +74,10 @@ function SingleComment(props) {
         <div>
             <Comment
                 actions={actions}
-                author={props.comment.writer.name}
+                author={props.comment.writer?.name}
                 avatar={
                     <Avatar
-                        src={props.comment.writer.image}
+                        src={`http://192.249.18.120:80/${props.comment.writer?.image}`}
                         alt="image"
                     />
                 }
