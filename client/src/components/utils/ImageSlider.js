@@ -10,8 +10,6 @@ function ImageSlider(props) {
                         <img style={{width: '100%', maxHeight: '400px', objectFit: 'contain'}}
                             src={`http://192.249.18.171:80/${image}`} alt="postImage" />
                     </div>
-
-                    
                 ))}
             </Carousel>
         </div>

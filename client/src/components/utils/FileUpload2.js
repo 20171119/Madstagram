@@ -63,7 +63,7 @@ function FileUpload2(props) {
                 )}
             </Dropzone>
 
-            <div style={{ display: 'flex', width: '150px', height: '100px', overflowX: 'scroll' }}>
+            <div style={{ display: 'flex', width: '150px', height: '100px'}}>
                 <div onClick={() => onDelete(Image)}>
                     <img style={{ maxWidth: '150px', width: '150px', height: '100px', objectFit: 'contain' }} src={`http://192.249.18.120:80/${Image}`}/>
                 </div>
