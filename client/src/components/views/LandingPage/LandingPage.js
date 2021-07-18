@@ -58,7 +58,7 @@ function LandingPage() {
 
 
     return (
-        <div style={{ width: '70%', margin: '3rem auto' }}>
+        <div style={{ marginLeft: '270px', marginRight: '270px' }}>
             <Row>
                 <Col xs={0} sm={0} md={6} lg={8}>
                     <Sider />

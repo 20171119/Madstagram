@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Menu, Avatar } from 'antd';
+import { Menu, Avatar, Button, Dropdown } from 'antd';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
@@ -21,32 +21,31 @@ function RightMenu(props) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="mail">
-          <a href="/login">Signin</a>
-        </Menu.Item>
-
-        <Menu.Item key="app">
-          <a href="/register">Signup</a>
-        </Menu.Item>
-      </Menu>
+        <div style={{marginTop: '10px'}}>
+            <Button type="text">
+              <a href="/login">Signin</a>
+            </Button>
+            <Button type="text">
+              <a href="/register">Signup</a>
+            </Button>
+        </div>
     )
   } else {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="upload">
-          <a href="/posts/upload">Upload</a>
-        </Menu.Item>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-        <Menu.Item>
-          <Avatar key="profile">
+        <div style={{marginTop: '10px'}}>
+          <Button type="text">
+            <a href="/posts/upload">Upload</a>
+          </Button>
+          {/* <Dropdown overlay={}>
+
+          </Dropdown> */}
+          <Button type="text">
+            <a onClick={logoutHandler}>Logout</a>
+          </Button>
+          <Avatar style={{marginLeft: '5px'}} key="profile">
             <a href={`/users/${user.userData?._id}`} />
           </Avatar>
-        </Menu.Item>
-        
-      </Menu>
+        </div>
     )
   }
 }

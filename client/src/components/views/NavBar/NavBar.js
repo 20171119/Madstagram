@@ -17,14 +17,12 @@ function NavBar() {
   };
 
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '55px' }}>
+    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '55px', paddingLeft: '270px', paddingRight: '270px' }}>
       <div className="menu__logo">
-        <a href="/">Logo</a>
+        <a href="/">Madstagram</a>
       </div>
-      <div className="menu__container">
-        <div className="menu_rigth">
-          <RightMenu mode="horizontal" />
-        </div>
+      <div >
+          <RightMenu />
       </div>
     </nav>
   )
