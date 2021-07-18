@@ -72,9 +72,8 @@ function ProfilePage(props) {
                 <Row >
                     <Col lg={8}>
                         <div align='center'>
-                            <Avatar size={120} icon={<UserOutlined/>} src={User.image} />
-                        </div>
-                        
+                        <Avatar size={120} src={`http://192.249.18.120:80/${User.image}`} />
+                        </div>                    
                     </Col>
 
                     <Col lg={16}>

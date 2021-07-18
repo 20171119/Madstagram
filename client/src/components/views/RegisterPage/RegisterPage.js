@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState} from 'react'
 import moment from "moment";
+import Axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
+import FileUpload2 from '../../utils/FileUpload2';
 
 import {
   Form,
@@ -36,6 +38,38 @@ const tailFormItemLayout = {
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
+  const [Semesters, setSemesters] = useState([])
+  const [usrSem, setusrSem] = useState("")
+  const [Images, setImages] = useState("")
+
+  useEffect(() => {
+        getSemesters();
+    }, [])
+
+    const getSemesters = () => {
+      Axios.post('/api/semesters/getSemesters')
+        .then(response => {
+          if (response.data.success) {
+            setSemesters(response.data.semesters)
+          } else {
+            alert('Failed to fectch product datas')
+          }
+      })
+    }
+
+  const handleSemester = (e) => {
+    var e = document.getElementById("semester-select");
+    setusrSem(e.value);
+  };
+
+  const renderSemesters = Semesters.map((semester, index) => {
+    return <option key={index} value={semester.semester}>{semester.semester}</option>
+  })
+
+  const updateImages = (newImages) => {
+    setImages(newImages)
+  }
+
   return (
 
     <Formik
@@ -58,21 +92,21 @@ function RegisterPage(props) {
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm Password is required'),
-        semester: Yup.string()
-          .required('Semester is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-
           let dataToSubmit = {
             email: values.email,
             password: values.password,
             name: values.name,
-            image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
-            semester: values.semester
+            image: Images,
+            semester: usrSem
           };
 
+          console.log("A",dataToSubmit)
+
           dispatch(registerUser(dataToSubmit)).then(response => {
+            console.log("B", response.payload)
             if (response.payload.success) {
               props.history.push("/login");
             } else {
@@ -100,7 +134,9 @@ function RegisterPage(props) {
           <div className="app">
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
-
+              <Form.Item label="Image" required>
+                <FileUpload2 refreshFunction={updateImages} />
+              </Form.Item>
               <Form.Item required label="Name">
                 <Input
                   id="name"
@@ -170,20 +206,10 @@ function RegisterPage(props) {
               </Form.Item>
 
               <Form.Item required label="Semester">
-                <Input
-                  id="semester"
-                  placeholder="Enter your semester"
-                  type="text"
-                  value={values.semester}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.semester && touched.semester ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.semester && touched.semester && (
-                  <div className="input-feedback">{errors.semester}</div>
-                )}
+                <select name="semesters" id="semester-select" onChange={handleSemester}>
+                  <option value="">--Please Select you semester--</option>
+                  {renderSemesters}
+                </select>
               </Form.Item>
               
 

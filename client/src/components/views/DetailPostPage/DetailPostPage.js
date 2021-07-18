@@ -4,11 +4,11 @@ import PostImage from './Sections/PostImage';
 import PostInfo from './Sections/PostInfo';
 import Comments from './Sections/Comments.js'
 // import PostButton from './Sections/PostButton.js'
-import { Row, Col, Menu} from 'antd';
+import { Row, Col, Button} from 'antd';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import UpdatePage from '../UpdatePage/UpdatePage';
-
+import Like from './Sections/Like';
 
 function DetailPostPage(props) {
     const user = useSelector(state => state.user)
@@ -73,8 +73,6 @@ function DetailPostPage(props) {
         setVisibleBtn(!setVisibleBtn);
     }
 
-    console.log(Writer)
-
     return (
         <div className="postPage" style={{ marginLeft: '270px', marginRight: '270px' }}>
 
@@ -83,15 +81,16 @@ function DetailPostPage(props) {
             </div>
             <br />
                 {Posts.writer?._id === user.userData?._id && VisibleBtn &&
-                    <button onClick={deletePost}>Delete</button>
+                    <Button onClick={deletePost}>Delete</Button>
                 }
                 {Posts.writer?._id === user.userData?._id && VisibleBtn &&
-                    <button onClick={updatePost}>Update</button>
+                    <Button onClick={updatePost}>Update</Button>
                 }
                 {!OpenUpdate && (
                     <Row gutter={[16, 16]} >
                         <Col lg={12} xs={24}>
                             <PostImage detail={Posts} />
+                            <Like post postId={postId} userId={localStorage.getItem('userId')}></Like>
                         </Col>
                         <Col lg={12} xs={24}>
                             <PostInfo detail={Posts} writer={Posts.writer}/>

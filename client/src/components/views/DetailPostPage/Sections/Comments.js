@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Input } from 'antd';
-import { List} from 'antd';
-import Like from './Like';
 import axios from 'axios';
 import {
     MessageOutlined
@@ -39,6 +37,8 @@ function Comments(props) {
             })
     }
 
+    console.log("pId1", props.postId)
+
     return (
         <div>
             <br />
@@ -55,7 +55,6 @@ function Comments(props) {
             ))}
             
             <br/>
-            <Like post postId={props.postId} userId={localStorage.getItem('userId')}></Like>
             <MessageOutlined/>
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>

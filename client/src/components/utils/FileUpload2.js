@@ -4,9 +4,10 @@ import {
     PlusOutlined
 } from '@ant-design/icons';
 import Axios from 'axios';
-function FileUpload(props) {
+function FileUpload2(props) {
 
-    const [Images, setImages] = useState([])
+    const [Image, setImage] = useState("")
+    const [OpenImg, setOpenImg] = useState(false)
 
     const onDrop = (files) => {
 
@@ -21,8 +22,8 @@ function FileUpload(props) {
                 console.log(response.data);
                 if (response.data.success) {
                     // console.log(response.data);
-                    setImages([...Images, response.data.image])
-                    props.refreshFunction([...Images, response.data.image])
+                    setImage(response.data.image)
+                    props.refreshFunction(response.data.image)
 
                 } else {
                     alert('Failed to save the Image in Server')
@@ -32,13 +33,13 @@ function FileUpload(props) {
 
 
     const onDelete = (image) => {
-        const currentIndex = Images.indexOf(image);
+        const currentIndex = Image.indexOf(image);
 
-        let newImages = [...Images]
-        newImages.splice(currentIndex, 1)
+        let newImage = [...Image]
+        newImage.splice(currentIndex, 1)
 
-        setImages(newImages)
-        props.refreshFunction(newImages)
+        setImage(newImage)
+        props.refreshFunction(newImage)
     }
 
     return (
@@ -50,7 +51,7 @@ function FileUpload(props) {
             >
                 {({ getRootProps, getInputProps }) => (
                     <div style={{
-                        width: '300px', height: '240px', border: '1px solid lightgray',
+                        width: '150px', height: '100px', border: '1px solid lightgray',
                         display: 'flex', alignItems: 'center', justifyContent: 'center'
                     }}
                         {...getRootProps()}
@@ -62,19 +63,14 @@ function FileUpload(props) {
                 )}
             </Dropzone>
 
-            <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
-
-                {Images.map((image, index) => (
-                    <div key={index} onClick={() => onDelete(image)}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://192.249.18.120:80/${image}`} alt={`productImg-${index}`} />
-                    </div>
-                ))}
-
-
+            <div style={{ display: 'flex', width: '150px', height: '100px', overflowX: 'scroll' }}>
+                <div onClick={() => onDelete(Image)}>
+                    <img style={{ maxWidth: '150px', width: '150px', height: '100px', objectFit: 'contain' }} src={`http://192.249.18.120:80/${Image}`}/>
+                </div>
             </div>
 
         </div>
     )
 }
 
-export default FileUpload
+export default FileUpload2

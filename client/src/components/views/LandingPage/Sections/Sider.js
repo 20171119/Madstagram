@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import Axios from 'axios';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import SemesterAddPage from './SemesterAddPage';
 
@@ -49,11 +49,14 @@ function Slider(props) {
         <div>
             {!OpenAdd ?
                 <Sider style={{position: 'fixed'}}>
-                    <button onClick={semesterUpdate}>Semester Add</button>
-                    <label>Choose a Semester</label>
-                    <select name="semesters" id="semester-select" onChange={handleSemester}>
-                        {renderSemesters}
-                    </select>
+                    <div>
+                        <Button onClick={semesterUpdate} style={{width:"100%"}}>Semester Add</Button> 
+                    </div>
+                    <div>
+                        <select name="semesters" id="semester-select" onChange={handleSemester} style={{width:"100%"}}>
+                            {renderSemesters}
+                        </select>
+                    </div>
                 </Sider>
                 :
                 <SemesterAddPage refreshFunction={semesterUpdate}/>

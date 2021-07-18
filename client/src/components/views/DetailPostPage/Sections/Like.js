@@ -12,24 +12,28 @@ function Like(props) {
     const [LikeAction, setLikeAction] = useState(null)
 
     let variable = {};
+    let variable2 = {};
 
     if (props.post) {
         variable = { postId: props.postId, userId: props.userId }
+        variable2 = { postId: props.postId }
     } else {
         variable = { commentId: props.commentId, userId: props.userId }
+        variable2 = { commentId: props.commentId }
     }
 
     
 
 
     useEffect(() => {
-
-        Axios.post('/api/likes/getLikes', variable)
+        console.log("pId2", props.postId)
+        Axios.post('/api/likes/getLikes', variable2)
             .then(response => {
+                console.log("var2", variable2)
                 // console.log('getLikes',response.data)
-
                 if (response.data.success) {
                     //How many likes does this video or comment have 
+                    console.log('Likes.length', response.data.likes)
                     setLikes(response.data.likes.length)
 
                     //if I already click this like button or not 
