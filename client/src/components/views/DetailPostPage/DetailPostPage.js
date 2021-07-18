@@ -8,7 +8,7 @@ import { Row, Col, Menu} from 'antd';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import UpdatePage from '../UpdatePage/UpdatePage';
-
+import Like from './Sections/Like';
 
 function DetailPostPage(props) {
     const user = useSelector(state => state.user)
@@ -73,8 +73,6 @@ function DetailPostPage(props) {
         setVisibleBtn(!setVisibleBtn);
     }
 
-    console.log(Writer)
-
     return (
         <div className="postPage" style={{ width: '100%', padding: '3rem 4rem' }}>
 
@@ -92,6 +90,7 @@ function DetailPostPage(props) {
                     <Row gutter={[16, 16]} >
                         <Col lg={12} xs={24}>
                             <PostImage detail={Posts} />
+                            <Like post postId={postId} userId={localStorage.getItem('userId')}></Like>
                         </Col>
                         <Col lg={12} xs={24}>
                             <PostInfo detail={Posts} writer={Posts.writer}/>

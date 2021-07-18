@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Col, Card, Row, Layout, Menu, Avatar } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
-import Sider from './Sider'
+import Sider from './Sections/Sider'
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
@@ -38,7 +38,7 @@ function LandingPage() {
         return <Col key={index}>
             <Card 
                 title={
-                <div><Avatar src="post.writer.image"/></div>, <div>{post.writer.name}</div>}
+                <div><Avatar src={post.writer.image}/></div>, <div>{post.writer.name}</div>}
                 style={{ marginBottom: 24 }}
                 key={index}
                 hoverable={true}
@@ -51,7 +51,7 @@ function LandingPage() {
             >
                 <Meta
                     title={post.title}
-                    content={`${post.content}`}
+                    description={post.content}
                 />
             </Card>
         </Col>

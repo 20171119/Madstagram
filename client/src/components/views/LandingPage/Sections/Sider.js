@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import Axios from 'axios';
 import { Layout, Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import SemesterAddPage from './Sections/SemesterAddPage/SemesterAddPage';
+import SemesterAddPage from './SemesterAddPage';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -49,11 +49,14 @@ function Slider(props) {
         <div>
             {!OpenAdd ?
                 <Sider style={{position: 'fixed'}}>
-                    <button onClick={semesterUpdate}>Semester Add</button>
-                    <label>Choose a Semester</label>
-                    <select name="semesters" id="semester-select" onChange={handleSemester}>
-                        {renderSemesters}
-                    </select>
+                    <div>
+                        <button onClick={semesterUpdate} style={{width:"100%"}}>Semester Add</button> 
+                    </div>
+                    <div>
+                        <select name="semesters" id="semester-select" onChange={handleSemester} style={{width:"100%"}}>
+                            {renderSemesters}
+                        </select>
+                    </div>
                 </Sider>
                 :
                 <SemesterAddPage refreshFunction={semesterUpdate}/>

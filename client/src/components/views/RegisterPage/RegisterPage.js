@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState} from 'react'
 import moment from "moment";
+import Axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
@@ -36,6 +37,33 @@ const tailFormItemLayout = {
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
+  const [Semesters, setSemesters] = useState([])
+  const [usrSem, setusrSem] = useState("")
+
+    useEffect(() => {
+        getSemesters();
+    }, [])
+
+    const getSemesters = () => {
+      Axios.post('/api/semesters/getSemesters')
+        .then(response => {
+          if (response.data.success) {
+            setSemesters(response.data.semesters)
+          } else {
+            alert('Failed to fectch product datas')
+          }
+      })
+    }
+
+  const handleSemester = (e) => {
+    var e = document.getElementById("semester-select");
+    setusrSem(e.value);
+  };
+
+  const renderSemesters = Semesters.map((semester, index) => {
+    return <option key={index} value={semester.semester}>{semester.semester}</option>
+  })
+
   return (
 
     <Formik
@@ -58,19 +86,18 @@ function RegisterPage(props) {
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm Password is required'),
-        semester: Yup.string()
-          .required('Semester is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-
           let dataToSubmit = {
             email: values.email,
             password: values.password,
             name: values.name,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
-            semester: values.semester
+            semester: usrSem
           };
+
+          console.log("A",dataToSubmit)
 
           dispatch(registerUser(dataToSubmit)).then(response => {
             if (response.payload.success) {
@@ -170,20 +197,10 @@ function RegisterPage(props) {
               </Form.Item>
 
               <Form.Item required label="Semester">
-                <Input
-                  id="semester"
-                  placeholder="Enter your semester"
-                  type="text"
-                  value={values.semester}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.semester && touched.semester ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.semester && touched.semester && (
-                  <div className="input-feedback">{errors.semester}</div>
-                )}
+                <select name="semesters" id="semester-select" onChange={handleSemester}>
+                  <option value="">--Please Select you semester--</option>
+                  {renderSemesters}
+                </select>
               </Form.Item>
               
 
