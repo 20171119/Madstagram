@@ -69,4 +69,27 @@ router.get("/logout", auth, (req, res) => {
     });
 });
 
+router.post("/getUsers", (req, res) => {
+
+    User.find()
+        .exec((err, users) => {
+            if(err) return res.status(400).json({success: false})
+            return res.status(200).json({success: true, users})
+        })
+
+});
+
+router.post("/user_by_id", (req, res) => {
+    console.log('user_by_id')
+    let userId = req.body.userId
+    console.log(userId)
+    //we need to find the product information that belong to product Id 
+    User.findOne({"_id": userId})
+        .exec((err, user) => {
+            console.log("in func    " + user)
+            if (err) return res.status(400).send(err)
+            return res.status(200).json({success: true, user})
+        })
+});
+
 module.exports = router;

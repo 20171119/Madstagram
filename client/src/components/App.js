@@ -8,6 +8,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import UploadPage from "./views/UploadPage/UploadPage";
 import DetailPostPage from "./views/DetailPostPage/DetailPostPage";
+import ProfilePage from "./views/ProfilePage/ProfilePage";
 import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/posts/upload" component={Auth(UploadPage, true)} />
           <Route exact path="/posts/:postId" component={Auth(DetailPostPage, null)} />
+          <Route exact path="/users/:userId" component={Auth(ProfilePage, null)} />
         </Switch>
       </div>
     </Suspense>

@@ -37,8 +37,10 @@ function LandingPage() {
 
         return <Col key={index}>
             <Card 
-                title={
-                <div><Avatar src={post.writer.image}/></div>, <div>{post.writer.name}</div>}
+                title={<div style={{maxHeight: '30px'}}>
+                    <div style={{display: 'inline'}}><Avatar src={post.writer.image}/></div> 
+                    <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
+                </div>}
                 style={{ marginBottom: 24 }}
                 key={index}
                 hoverable={true}
@@ -60,7 +62,7 @@ function LandingPage() {
 
 
     return (
-        <div style={{ width: '70%', margin: '3rem auto' }}>
+        <div style={{ marginLeft: '270px', marginRight: '270px', marginTop: '20px' }}>
             <Row>
                 <Col xs={0} sm={0} md={6} lg={8}>
                     <Sider refreshFunction={updateSemester}/>
