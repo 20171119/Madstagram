@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Semester } = require("../models/Semester");
-const multer = require('multer');
-
 const { auth } = require("../middleware/auth");
 
 
@@ -10,23 +8,26 @@ const { auth } = require("../middleware/auth");
 //             Post
 //=================================
 
-module.exports = router;
 
 // auth 빠짐
-router.post("/uploadPosts", (req, res) => {
-    console.log("/posts/uploadPosts")
+router.post("/create", (req, res) => {
+    console.log("/semester/create")
     //save all the data we got from the client into the DB 
-    const post = new Post(req.body)
+    const newSemester = {
+        "semester": req.body.semester,
+        "studentsNum": 0,
+        "postsNum": 0
+    }
 
-    post.save((err) => {
+    newSemester.save((err, semester) => {
         if (err) return res.status(400).json({ success: false, err })
-        return res.status(200).json({ success: true })
+        return res.status(200).json({ success: true, semseter })
     })
 
 });
 
 // auth 빠짐
-router.post("/getPosts", (req, res) => {
+router.post("/getSemester", (req, res) => {
 
     Post.find({ 'semester': req.body.semester })
         .populate("writer")
@@ -35,19 +36,6 @@ router.post("/getPosts", (req, res) => {
             return res.status(200).json({success: true, posts})
         })
 
-});
-
-router.get("/post_by_id", (req, res) => {
-    console.log('post_by_id')
-    let postIds = req.query.id
-
-    //we need to find the product information that belong to product Id 
-    Post.findOne({"_id": postIds})
-        .populate('writer')
-        .exec((err, post) => {
-            if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
-        })
 });
 
 router.delete("/delete", (req, res) => {

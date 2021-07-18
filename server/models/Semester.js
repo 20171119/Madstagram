@@ -5,8 +5,13 @@ const semesterSchema = mongoose.Schema({
     semester: {
         type: String
     }, 
-    students: {
-        type: Number
+    studentsNum: {
+        type: Number,
+        default: 0
+    },
+    postsNum: {
+        type: Number,
+        default: 0
     }
 }, { timestamps: true })
 
