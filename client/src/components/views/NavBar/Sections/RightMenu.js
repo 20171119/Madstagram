@@ -42,9 +42,9 @@ function RightMenu(props) {
           <Button type="text">
             <a onClick={logoutHandler}>Logout</a>
           </Button>
-          <Avatar style={{marginLeft: '5px'}} key="profile">
-            <a href={`/users/${user.userData?._id}`} />
-          </Avatar>
+          <a href={`/users/${user.userData?._id}`} >
+            <Avatar style={{marginLeft: '5px'}} key="profile" src={user.image} />
+          </a>
         </div>
     )
   }

@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import Axios from 'axios';
 import { Layout, Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import SemesterAddPage from './Sections/SemesterAddPage/SemesterAddPage';
+import SemesterAddPage from './SemesterAddPage';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;

@@ -17,7 +17,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '55px', paddingLeft: '270px', paddingRight: '270px' }}>
+    <nav className="menu" style={{ position: 'fixed', zIndex: 1, width: '100%', height: '54px', paddingLeft: '270px', paddingRight: '270px' }}>
       <div className="menu__logo">
         <a href="/">Madstagram</a>
       </div>
