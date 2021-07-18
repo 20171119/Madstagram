@@ -45,7 +45,7 @@ router.post("/uploadPosts", (req, res) => {
     console.log("/posts/uploadPosts")
     //save all the data we got from the client into the DB 
     const post = new Post(req.body)
-
+    console.log(req.body);
     post.save((err) => {
         if (err) return res.status(400).json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -55,10 +55,11 @@ router.post("/uploadPosts", (req, res) => {
 
 // auth 빠짐
 router.post("/getPosts", (req, res) => {
-
+    console.log("/posts/getPosts");
     Post.find({ 'semester': req.body.semester })
         .populate("writer")
         .exec((err, posts) => {
+            console.log(posts);
             if(err) return res.status(400).json({success: false})
             return res.status(200).json({success: true, posts})
         })
@@ -93,23 +94,24 @@ router.post("/posts_by_user", (req, res) => {
 
 router.delete("/delete", (req, res) => {
     console.log('post_delete')
-    let postIds = req.body._id
-    console.log(postIds)
+    let postIds = req.body.postId
     Post.findOneAndDelete({"_id": postIds}, (err, post) => {
         if (err) return res.status(400).send(err)
-        return res.status(200).send(post)
+        return res.status(200).json({success: true, post})
     })
 })
 
 router.put("/update", (req, res) => {
 
+    console.log(req.body)
     let filter = {
-        "_id": req.body._id
+        "_id": req.body.postId
     }
 
     let update = {
         "title": req.body.title,
-        "content": req.body.content
+        "content": req.body.content,
+        "images": req.body.images
     }
 
     Post.findOneAndUpdate(
@@ -119,9 +121,12 @@ router.put("/update", (req, res) => {
             new: true
         },
         (err, post) => {
+            console.log('post/update')
+            console.log(post)
             if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+            return res.status(200).json({success: true, post})
         }
+        
     )
 })
 

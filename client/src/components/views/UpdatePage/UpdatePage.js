@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Typography, Button, Form, message, Input} from 'antd';
 import FileUpload from '../../utils/FileUpload';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-function UploadPage(props) {
-
+function UpdatePage(props) {
     const [TitleValue, setTitleValue] = useState("")
     const [ContentValue, setContentValue] = useState("")
     const [Images, setImages] = useState([])
@@ -28,23 +28,24 @@ function UploadPage(props) {
         event.preventDefault();
 
 
-        if (!TitleValue || !ContentValue || !Images) {
-            return alert('fill all the fields first!')
-        }
+        // if (!TitleValue || !ContentValue || !Images) {
+        //     return alert('fill all the fields first!')
+        // }
 
         const variables = {
-            writer: props.user.userData._id,
+            postId: props.post._id,
             title: TitleValue,
             content: ContentValue,
             images: Images,
-            semester: props.user.userData.semester
         }
 
-        Axios.post('/api/posts/uploadPosts', variables)
+        Axios.put('/api/posts/update', variables)
             .then(response => {
                 if (response.data.success) {
-                    alert('Posts Successfully Uploaded')
-                    props.history.push('/')
+                    alert('Posts Successfully Updated')
+                    console.log(response.data)
+                    props.history.push("/");
+                    
                 } else {
                     alert('Failed to upload Posts')
                 }
@@ -55,7 +56,7 @@ function UploadPage(props) {
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <Title level={2}> Upload your Posts</Title>
+                <Title level={2}> Update your Posts</Title>
             </div>
 
 
@@ -91,4 +92,4 @@ function UploadPage(props) {
     )
 }
 
-export default UploadPage
+export default withRouter(UpdatePage)

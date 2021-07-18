@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Semester } = require("../models/Semester");
-const multer = require('multer');
-
 const { auth } = require("../middleware/auth");
 
 
@@ -10,53 +8,58 @@ const { auth } = require("../middleware/auth");
 //             Post
 //=================================
 
-module.exports = router;
 
 // auth 빠짐
-router.post("/uploadPosts", (req, res) => {
-    console.log("/posts/uploadPosts")
+router.post("/create", (req, res) => {
+    console.log("/semester/create")
     //save all the data we got from the client into the DB 
-    const post = new Post(req.body)
+    const newSemester = {
+        "semester": req.body.semester,
+        "studentsNum": 0,
+        "postsNum": 0
+    }
 
-    post.save((err) => {
+    const semester = new Semester(newSemester);
+
+
+    semester.save((err, semester) => {
         if (err) return res.status(400).json({ success: false, err })
-        return res.status(200).json({ success: true })
+        return res.status(200).json({ success: true, semester })
     })
 
 });
 
-// auth 빠짐
-router.post("/getPosts", (req, res) => {
-
-    Post.find({ 'semester': req.body.semester })
+router.post("/getSemesters", (req, res) => {
+    console.log("/semester/getSemesters")
+    Semester.find()
         .populate("writer")
-        .exec((err, posts) => {
+        .exec((err, semesters) => {
             if(err) return res.status(400).json({success: false})
-            return res.status(200).json({success: true, posts})
+            return res.status(200).json({success: true, semesters})
         })
 
 });
 
-router.get("/post_by_id", (req, res) => {
-    console.log('post_by_id')
-    let postIds = req.query.id
 
-    //we need to find the product information that belong to product Id 
-    Post.findOne({"_id": postIds})
-        .populate('writer')
-        .exec((err, post) => {
-            if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+// auth 빠짐
+router.post("/getSemester", (req, res) => {
+
+    Semester.find({ 'semester': req.body.semester })
+        .populate("writer")
+        .exec((err, semester) => {
+            if(err) return res.status(400).json({success: false})
+            return res.status(200).json({success: true, semester})
         })
+
 });
 
 router.delete("/delete", (req, res) => {
     console.log('post_delete')
     let postIds = req.body._id
     console.log(postIds)
-    Post.findOneAndDelete({"_id": postIds}, (err, post) => {
+    Semester.findOneAndDelete({"_id": postIds}, (err, semester) => {
         if (err) return res.status(400).send(err)
-        return res.status(200).send(post)
+        return res.status(200).send(semester)
     })
 })
 
@@ -71,15 +74,15 @@ router.put("/update", (req, res) => {
         "content": req.body.content
     }
 
-    Post.findOneAndUpdate(
+    Semester.findOneAndUpdate(
         filter,
         update,
         {
             new: true
         },
-        (err, post) => {
+        (err, semester) => {
             if (err) return res.status(400).send(err)
-            return res.status(200).send(post)
+            return res.status(200).send(semester)
         }
     )
 })

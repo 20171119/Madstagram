@@ -14,8 +14,8 @@ yarn-error.log*
 package.json
 package-lock.json
 
-client/package.json
-client/package-lock.json
-client/.gitignore
+/client/package.json
+/client/package-lock.json
+/client/.gitignore
 
 .gitignore
