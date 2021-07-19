@@ -57,7 +57,7 @@ router.post("/uploadPosts", (req, res) => {
 router.post("/getPosts", (req, res) => {
     // console.log("/posts/getPosts");
     Post.find({ 'semester': req.body.semester })
-        .sort({createdAt: -1})
+        .sort({updatedAt: -1})
         .populate("writer")
         .exec((err, posts) => {
             console.log(posts);
