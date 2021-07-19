@@ -8,9 +8,9 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 function UpdatePage(props) {
-    const [TitleValue, setTitleValue] = useState("")
-    const [ContentValue, setContentValue] = useState("")
-    const [Images, setImages] = useState([])
+    const [TitleValue, setTitleValue] = useState(props.post.title)
+    const [ContentValue, setContentValue] = useState(props.post.content)
+    const [Images, setImages] = useState(props.post.images)
 
 
     const onTitleChange = (event) => {
@@ -27,11 +27,6 @@ function UpdatePage(props) {
     const onSubmit = (event) => {
         event.preventDefault();
 
-
-        // if (!TitleValue || !ContentValue || !Images) {
-        //     return alert('fill all the fields first!')
-        // }
-
         const variables = {
             postId: props.post._id,
             title: TitleValue,
@@ -44,7 +39,7 @@ function UpdatePage(props) {
                 if (response.data.success) {
                     alert('Posts Successfully Updated')
                     console.log(response.data)
-                    props.history.push("/");
+                    props.history.push(`/users/${props.user.userData._id}`);
                     
                 } else {
                     alert('Failed to upload Posts')
@@ -58,7 +53,6 @@ function UpdatePage(props) {
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <Title level={2}> Update your Posts</Title>
             </div>
-
 
             <Form onSubmit={onSubmit} >
 

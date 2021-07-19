@@ -97,9 +97,9 @@ function DetailPostPage(props) {
                         </Col>
                     </Row>
                 )}
-            {OpenUpdate &&
-                <UpdatePage user={user} post={Posts}></UpdatePage>
-            }
+                {OpenUpdate &&
+                    <UpdatePage user={user} post={Posts}></UpdatePage>
+                }
         </div>
     )
 }
