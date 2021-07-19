@@ -8,7 +8,7 @@ function ImageSlider2(props) {
                 {props.images.map((image, index) => (
                     <div>
                         <img style={{width: '100%', maxHeight: '200px', objectFit: 'contain'}}
-                        src={`http://192.249.18.171:80/${image}`} alt="postImage" />
+                        src={`http://192.249.18.120:80/${image}`} alt="postImage" />
                     </div>
 
                     

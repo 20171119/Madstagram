@@ -9,7 +9,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "formik": "^2.2.9",
-    "material-ui": "^0.20.0",
+    "material-ui": "^0.15.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.6",

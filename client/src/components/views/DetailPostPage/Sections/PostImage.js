@@ -11,7 +11,7 @@ function PostImage(props) {
 
             props.detail.images && props.detail.images.map(item => {
                 images.push({
-                    original: `http://192.249.18.171:80/${item}`,
+                    original: `http://192.249.18.120:80/${item}`,
                 })
             })
             setImages(images)

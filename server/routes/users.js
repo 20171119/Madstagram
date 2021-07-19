@@ -103,6 +103,7 @@ router.post("/semester", (req, res) => {
 
 router.put("/update", (req, res) => {
 
+    console.log("/user/update")
     console.log(req.body)
     let filter = {
         "_id": req.body.userId

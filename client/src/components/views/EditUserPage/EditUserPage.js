@@ -34,7 +34,7 @@ const tailFormItemLayout = {
   },
 };
 
-function RegisterPage(props) {
+function EditUserPage(props) {
   const [Semesters, setSemesters] = useState([])
   const [usrSem, setusrSem] = useState(props.user.semester)
   const [Image, setImage] = useState(props.user.image)
@@ -227,4 +227,4 @@ function RegisterPage(props) {
 };
 
 
-export default withRouter(RegisterPage)
+export default withRouter(EditUserPage)
