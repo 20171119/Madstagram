@@ -22,8 +22,8 @@ function SemesterAddPage(props) {
         Axios.post('/api/semesters/create', variables)
             .then(response => {
                 if (response.data.success) {
-                    alert('Semester Successfully create')
                     props.refreshFunction(response.data.semester);
+                    window.location.reload()
                 } else {
                     alert('Failed to create semester')
                 }

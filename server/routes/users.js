@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const { auth } = require("../middleware/auth");
 
 //=================================
@@ -101,20 +102,23 @@ router.post("/semester", (req, res) => {
 
 });
 
-router.put("/update", (req, res) => {
+router.put("/update", async (req, res) => {
 
-    console.log("/user/update")
-    console.log(req.body)
+    console.log("/user/update");
+    console.log(req.body);
     let filter = {
         "_id": req.body.userId
-    }
+    };
+
+    const prettyPassword = req.body.password;
+    const hashedPassword = await bcrypt.hash(prettyPassword, 10);
 
     let update = {
         "name": req.body.name,
-        "password": req.body.password,
+        "password": hashedPassword,
         "image": req.body.image,
         "semester": req.body.semester
-    }
+    };
 
     User.findOneAndUpdate(
         filter,
@@ -126,10 +130,35 @@ router.put("/update", (req, res) => {
             console.log('user/update')
             console.log(user)
             if (err) return res.status(400).send(err)
-            return res.status(200).json({success: true, user})
+                return res.status(200).json({success: true, user})
         }
-        
     )
-})
+
+    // bcrypt.hash(
+    //     update["password"], 
+    //     10,
+    //     (err, hash) => {
+    //         if(err) return res.status(400).send(err)
+    //         console.log("A2", hash)
+    //         update["password"] = hash;
+    //         console.log("A3", update)
+    //     }
+    // ).then(async ()=> {
+    //     await User.findOneAndUpdate(
+    //         filter,
+    //         update,
+    //         {
+    //             new: true
+    //         },
+    //         (err, user) => {
+    //             console.log('user/update')
+    //             console.log(user)
+    //             if (err) return res.status(400).send(err)
+    //             return res.status(200).json({success: true, user})
+    //         }
+    //     )
+    // });
+});
+
 
 module.exports = router;

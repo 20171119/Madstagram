@@ -6,6 +6,7 @@ import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { FormOutlined } from '@ant-design/icons';
+import SemesterAddPage2 from '../../LandingPage/Sections/SemesterAddPage2';
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -49,7 +50,7 @@ function RightMenu(props) {
             <Avatar size='large' style={{backgroundColor: '#ffffff', color: 'black'}} icon={<FormOutlined />} />
           </a>
           <Dropdown overlay={menu}>
-            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.171:80/${user.userData?.image}`} />
+            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.120:80/${user.userData?.image}`} />
           </Dropdown>
         </div>
     )
