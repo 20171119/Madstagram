@@ -103,15 +103,16 @@ router.post("/semester", (req, res) => {
 
 router.put("/update", (req, res) => {
 
-    console.log(req.body)
+    console.log("update", req.body)
     let filter = {
         "_id": req.body.userId
     }
 
     let update = {
-        "title": req.body.name,
+        "name": req.body.name,
         "password": req.body.password,
-        "images": req.body.images
+        "image": req.body.image,
+        "semester": req.body.semester
     }
 
     User.findOneAndUpdate(

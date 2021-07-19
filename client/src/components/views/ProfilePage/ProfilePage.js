@@ -4,8 +4,6 @@ import { Col, Card, Row, Divider , Menu, Avatar, Empty, Button, Descriptions } f
 import ImageSlider2 from '../../utils/ImageSlider2';
 import EditUserPage from '../EditUserPage/EditUserPage'
 
-import { UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-
 const { SubMenu } = Menu;
 const { Meta } = Card;
 

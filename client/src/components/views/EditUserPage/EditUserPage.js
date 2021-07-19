@@ -34,7 +34,7 @@ const tailFormItemLayout = {
   },
 };
 
-function RegisterPage(props) {
+function EditUserPage(props) {
   const [Semesters, setSemesters] = useState([])
   const [usrSem, setusrSem] = useState(props.user.semester)
   const [Image, setImage] = useState(props.user.image)
@@ -95,6 +95,7 @@ function RegisterPage(props) {
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             let dataToSubmit = {
+              userId: props.user._id,
               email: values.email,
               password: values.password,
               name: values.name,
@@ -102,13 +103,13 @@ function RegisterPage(props) {
               semester: usrSem
             };
   
-            console.log("A",dataToSubmit)
+            console.log("A", dataToSubmit)
   
             Axios.put('/api/users/update', dataToSubmit)
-              .then(response => {
+              .then(response => { 
                   if (response.data.success) {
                       alert('User profile successfully editted')
-                      console.log(response.data)
+                      console.log("AA ", response.data)
                       props.history.push("/");
                       
                   } else {
@@ -227,4 +228,4 @@ function RegisterPage(props) {
 };
 
 
-export default withRouter(RegisterPage)
+export default withRouter(EditUserPage)

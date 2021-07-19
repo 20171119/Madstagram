@@ -12,9 +12,9 @@ const http = require('http')
 const server = require('http').createServer(app)
 const io = require("socket.io")(server);
 
-io.sockets.on('connection', (socket) => {
-  console.log(`Socket connected : ${socket.id}`)
-})
+// io.sockets.on('connection', (socket) => {
+//   console.log(`Socket connected : ${socket.id}`)
+// })
 
 const mongoose = require("mongoose");
 const connect = mongoose.connect(config.mongoURI,
