@@ -38,8 +38,6 @@ function RegisterPage(props) {
   const [Semesters, setSemesters] = useState([])
   const [usrSem, setusrSem] = useState(props.user.semester)
   const [Image, setImage] = useState(props.user.image)
-  const [Name, setName] = useState(props.user.name)
-  const [Password, setPassword] = useState("")
 
   useEffect(() => {
       getSemesters();
@@ -61,14 +59,6 @@ function RegisterPage(props) {
     setusrSem(e.value);
   };
 
-  const onNameChange = (event) => {
-    setName(event.currentTarget.value)
-  }
-
-  const onPasswordChange = (event) => {
-    setPassword(event.currentTarget.value)
-  }
-
   const renderSemesters = Semesters.map((semester, index) => {
     return <option key={index} value={semester.semester}>{semester.semester}</option>
   })
@@ -83,7 +73,7 @@ function RegisterPage(props) {
     let dataToSubmit = {
       userId: props.user._id,
       email: props.user.email,
-      password: Password,
+      password: props,
       name: Name,
       image: Image,
       semester: usrSem
@@ -151,7 +141,7 @@ function RegisterPage(props) {
                     placeholder="Enter your name"
                     type="text"
                     value={values.name}
-                    onChange={onNameChange}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     className={
                         errors.name && touched.name ? 'text-input error' : 'text-input'
@@ -185,7 +175,7 @@ function RegisterPage(props) {
                     placeholder="Enter your password"
                     type="password"
                     value={values.password}
-                    onChange={onPasswordChange}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     className={
                         errors.password && touched.password ? 'text-input error' : 'text-input'
