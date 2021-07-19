@@ -10,7 +10,9 @@ import UploadPage from "./views/UploadPage/UploadPage";
 import DetailPostPage from "./views/DetailPostPage/DetailPostPage";
 import ProfilePage from "./views/ProfilePage/ProfilePage";
 import { Layout, Menu } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import io from 'socket.io-client';
+
+const socket = io.connect('http://192.249.18.171:80')
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

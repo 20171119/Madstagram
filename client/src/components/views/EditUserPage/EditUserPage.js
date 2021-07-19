@@ -38,8 +38,6 @@ function RegisterPage(props) {
   const [Semesters, setSemesters] = useState([])
   const [usrSem, setusrSem] = useState(props.user.semester)
   const [Image, setImage] = useState(props.user.image)
-  const [Name, setName] = useState(props.user.name)
-  const [Password, setPassword] = useState("")
 
   useEffect(() => {
       getSemesters();
@@ -61,14 +59,7 @@ function RegisterPage(props) {
     setusrSem(e.value);
   };
 
-  const onNameChange = (event) => {
-    setName(event.currentTarget.value)
-  }
-
-  const onPasswordChange = (event) => {
-    setPassword(event.currentTarget.value)
-  }
-
+  
   const renderSemesters = Semesters.map((semester, index) => {
     return <option key={index} value={semester.semester}>{semester.semester}</option>
   })
@@ -77,39 +68,12 @@ function RegisterPage(props) {
     setImage(newImage)
   }
 
-  const onSubmit= (event) => {
-    event.preventDefault();
-    
-    let dataToSubmit = {
-      userId: props.user._id,
-      email: props.user.email,
-      password: Password,
-      name: Name,
-      image: Image,
-      semester: usrSem
-    };
-
-    console.log("A", dataToSubmit)
-
-    Axios.put('/api/users/update', dataToSubmit)
-      .then(response => {
-          if (response.data.success) {
-              alert('User profile successfully editted')
-              console.log(response.data)
-              props.history.push("/");
-              
-          } else {
-              alert('Failed to upload Posts')
-          }
-      })
-  }
-
   return (
 
     <Formik
         initialValues={{
             email: props.user.email,
-            name: Name,
+            name: props.user.name,
             password: '',
             confirmPassword: '',
             semester: usrSem,
@@ -128,6 +92,33 @@ function RegisterPage(props) {
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .required('Confirm Password is required'),
         })}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            let dataToSubmit = {
+              email: values.email,
+              password: values.password,
+              name: values.name,
+              image: Image,
+              semester: usrSem
+            };
+  
+            console.log("A",dataToSubmit)
+  
+            Axios.put('/api/users/update', dataToSubmit)
+              .then(response => {
+                  if (response.data.success) {
+                      alert('User profile successfully editted')
+                      console.log(response.data)
+                      props.history.push("/");
+                      
+                  } else {
+                      alert('Failed to upload Posts')
+                  }
+              })
+  
+            setSubmitting(false);
+          }, 500);
+        }}
     >
         {props => {
             const {
@@ -137,11 +128,12 @@ function RegisterPage(props) {
             isSubmitting,
             handleChange,
             handleBlur,
+            handleSubmit,
             } = props;
             return (
             <div className="app">
                 <h2>Edit Profile</h2>
-                <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={onSubmit} >
+                <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
                 <Form.Item label="Image" required>
                     <FileUpload2 refreshFunction={updateImage} />
                 </Form.Item>
@@ -151,7 +143,7 @@ function RegisterPage(props) {
                     placeholder="Enter your name"
                     type="text"
                     value={values.name}
-                    onChange={onNameChange}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     className={
                         errors.name && touched.name ? 'text-input error' : 'text-input'
@@ -185,7 +177,7 @@ function RegisterPage(props) {
                     placeholder="Enter your password"
                     type="password"
                     value={values.password}
-                    onChange={onPasswordChange}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     className={
                         errors.password && touched.password ? 'text-input error' : 'text-input'
@@ -222,7 +214,7 @@ function RegisterPage(props) {
                 
 
                 <Form.Item {...tailFormItemLayout}>
-                    <Button onClick={onSubmit} type="primary" >
+                    <Button onClick={handleSubmit} type="primary" >
                       Submit
                     </Button>
                 </Form.Item>
