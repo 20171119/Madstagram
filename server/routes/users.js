@@ -92,4 +92,33 @@ router.post("/user_by_id", (req, res) => {
         })
 });
 
+router.put("/update", (req, res) => {
+
+    console.log(req.body)
+    let filter = {
+        "_id": req.body.userId
+    }
+
+    let update = {
+        "title": req.body.name,
+        "password": req.body.password,
+        "images": req.body.images
+    }
+
+    User.findOneAndUpdate(
+        filter,
+        update,
+        {
+            new: true
+        },
+        (err, user) => {
+            console.log('user/update')
+            console.log(user)
+            if (err) return res.status(400).send(err)
+            return res.status(200).json({success: true, user})
+        }
+        
+    )
+})
+
 module.exports = router;

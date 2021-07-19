@@ -8,11 +8,13 @@ const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
 
-// const mongoose = require("mongoose");
-// mongoose
-//   .connect(config.mongoURI, { useNewUrlParser: true })
-//   .then(() => console.log("DB connected"))
-//   .catch(err => console.error(err));
+const http = require('http')
+const server = require('http').createServer(app)
+const io = require("socket.io")(server);
+
+io.sockets.on('connection', (socket) => {
+  console.log(`Socket connected : ${socket.id}`)
+})
 
 const mongoose = require("mongoose");
 const connect = mongoose.connect(config.mongoURI,

@@ -1,11 +1,9 @@
 import React, { useEffect, useState} from 'react'
-import moment from "moment";
 import Axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { registerUser } from "../../../_actions/user_actions";
-import { useDispatch } from "react-redux";
 import FileUpload2 from '../../utils/FileUpload2';
+import { withRouter } from 'react-router-dom';
 
 import {
   Form,
@@ -37,37 +35,73 @@ const tailFormItemLayout = {
 };
 
 function RegisterPage(props) {
-  const dispatch = useDispatch();
   const [Semesters, setSemesters] = useState([])
-  const [usrSem, setusrSem] = useState("")
-  const [Images, setImages] = useState("")
+  const [usrSem, setusrSem] = useState(props.user.semester)
+  const [Image, setImage] = useState(props.user.image)
+  const [Name, setName] = useState(props.user.name)
+  const [Password, setPassword] = useState("")
 
   useEffect(() => {
-        getSemesters();
-    }, [])
+      getSemesters();
+  }, [])
 
-    const getSemesters = () => {
-      Axios.post('/api/semesters/getSemesters')
-        .then(response => {
-          if (response.data.success) {
-            setSemesters(response.data.semesters)
-          } else {
-            alert('Failed to fectch product datas')
-          }
-      })
-    }
+  const getSemesters = () => {
+    Axios.post('/api/semesters/getSemesters')
+      .then(response => {
+        if (response.data.success) {
+          setSemesters(response.data.semesters)
+        } else {
+          alert('Failed to fectch product datas')
+        }
+    })
+  }
 
   const handleSemester = (e) => {
     var e = document.getElementById("semester-select");
     setusrSem(e.value);
   };
 
+  const onNameChange = (event) => {
+    setName(event.currentTarget.value)
+  }
+
+  const onPasswordChange = (event) => {
+    setPassword(event.currentTarget.value)
+  }
+
   const renderSemesters = Semesters.map((semester, index) => {
     return <option key={index} value={semester.semester}>{semester.semester}</option>
   })
 
-  const updateImages = (newImages) => {
-    setImages(newImages)
+  const updateImage = (newImage) => {
+    setImage(newImage)
+  }
+
+  const onSubmit= (event) => {
+    event.preventDefault();
+    
+    let dataToSubmit = {
+      userId: props.user._id,
+      email: props.user.email,
+      password: Password,
+      name: Name,
+      image: Image,
+      semester: usrSem
+    };
+
+    console.log("A", dataToSubmit)
+
+    Axios.put('/api/users/update', dataToSubmit)
+      .then(response => {
+          if (response.data.success) {
+              alert('User profile successfully editted')
+              console.log(response.data)
+              props.history.push("/");
+              
+          } else {
+              alert('Failed to upload Posts')
+          }
+      })
   }
 
   return (
@@ -75,10 +109,11 @@ function RegisterPage(props) {
     <Formik
         initialValues={{
             email: props.user.email,
-            name: props.user.name,
+            name: Name,
             password: '',
             confirmPassword: '',
-            semester: props.user.semester,
+            semester: usrSem,
+            image: Image
         }}
         validationSchema={Yup.object().shape({
             name: Yup.string()
@@ -93,49 +128,22 @@ function RegisterPage(props) {
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .required('Confirm Password is required'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-            let dataToSubmit = {
-                email: values.email,
-                password: values.password,
-                name: values.name,
-                image: Images,
-                semester: usrSem
-            };
-
-            console.log("A",dataToSubmit)
-
-            dispatch(registerUser(dataToSubmit)).then(response => {
-                console.log("B", response.payload)
-                if (response.payload.success) {
-                props.history.push("/login");
-                } else {
-                alert(response.payload.err.errmsg)
-                }
-            })
-
-            setSubmitting(false);
-            }, 500);
-        }}
     >
         {props => {
             const {
             values,
             touched,
             errors,
-            dirty,
             isSubmitting,
             handleChange,
             handleBlur,
-            handleSubmit,
-            handleReset,
             } = props;
             return (
             <div className="app">
                 <h2>Edit Profile</h2>
-                <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
+                <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={onSubmit} >
                 <Form.Item label="Image" required>
-                    <FileUpload2 refreshFunction={updateImages} />
+                    <FileUpload2 refreshFunction={updateImage} />
                 </Form.Item>
                 <Form.Item required label="Name">
                     <Input
@@ -143,7 +151,7 @@ function RegisterPage(props) {
                     placeholder="Enter your name"
                     type="text"
                     value={values.name}
-                    onChange={handleChange}
+                    onChange={onNameChange}
                     onBlur={handleBlur}
                     className={
                         errors.name && touched.name ? 'text-input error' : 'text-input'
@@ -177,7 +185,7 @@ function RegisterPage(props) {
                     placeholder="Enter your password"
                     type="password"
                     value={values.password}
-                    onChange={handleChange}
+                    onChange={onPasswordChange}
                     onBlur={handleBlur}
                     className={
                         errors.password && touched.password ? 'text-input error' : 'text-input'
@@ -214,8 +222,8 @@ function RegisterPage(props) {
                 
 
                 <Form.Item {...tailFormItemLayout}>
-                    <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
-                    Submit
+                    <Button onClick={onSubmit} type="primary" >
+                      Submit
                     </Button>
                 </Form.Item>
                 </Form>
@@ -227,4 +235,4 @@ function RegisterPage(props) {
 };
 
 
-export default RegisterPage
+export default withRouter(RegisterPage)
