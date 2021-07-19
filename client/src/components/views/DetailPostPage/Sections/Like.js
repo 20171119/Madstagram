@@ -26,14 +26,11 @@ function Like(props) {
 
 
     useEffect(() => {
-        console.log("pId2", props.postId)
         Axios.post('/api/likes/getLikes', variable2)
             .then(response => {
-                console.log("var2", variable2)
                 // console.log('getLikes',response.data)
                 if (response.data.success) {
                     //How many likes does this video or comment have 
-                    console.log('Likes.length', response.data.likes)
                     setLikes(response.data.likes.length)
 
                     //if I already click this like button or not 

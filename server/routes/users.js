@@ -92,4 +92,14 @@ router.post("/user_by_id", (req, res) => {
         })
 });
 
+router.post("/semester", (req, res) => {
+    User.find({"semester": req.body.semester})
+        .exec((err, users) => {
+            if(err) return res.status(400).json({success: false})
+            return res.status(200).json({success: true, users})
+        })
+
+});
+
+
 module.exports = router;

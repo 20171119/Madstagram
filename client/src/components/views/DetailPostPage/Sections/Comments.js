@@ -37,8 +37,6 @@ function Comments(props) {
             })
     }
 
-    console.log("pId1", props.postId)
-
     return (
         <div>
             <br />

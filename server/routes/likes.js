@@ -15,7 +15,6 @@ router.post("/getLikes", (req, res) => {
     } else {
         variable = { commentId: req.body.commentId }
     }
-    console.log("Back", variable)
     Like.find(variable)
         .exec((err, likes) => {
             if (err) return res.status(400).send(err);

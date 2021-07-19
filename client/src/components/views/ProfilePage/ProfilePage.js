@@ -72,7 +72,7 @@ function ProfilePage(props) {
                 <Row >
                     <Col lg={8}>
                         <div align='center'>
-                        <Avatar size={120} src={`http://192.249.18.120:80/${User.image}`} />
+                            <Avatar size={120} src={`http://192.249.18.120:80/${User.image}`} />
                         </div>                    
                     </Col>
 
