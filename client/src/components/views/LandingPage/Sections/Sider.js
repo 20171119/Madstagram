@@ -10,34 +10,24 @@ const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Slider(props) {
-    
     const user = useSelector(state => state.user)
     const [OpenAdd, setOpenAdd] = useState(false)
-    const [Semesters, setSemesters] = useState([])
-    const [curSem, setcurSem] = useState("2021S")
+    const [curSem, setcurSem] = useState(user.userData?.semester)
 
-    useEffect(() => {
-        getSemesters();
-    }, [])
 
-    const getSemesters = () => {
-        Axios.post('/api/semesters/getSemesters')
-            .then(response => {
-                if (response.data.success) {
-                    setSemesters(response.data.semesters)
-                } else {
-                    alert('Failed to fectch product datas')
-                }
-            })
-    }
-
-    const renderSemesters = Semesters.map((semester, index) => {
-        return <option key={index} value={semester.semester}>{semester.semester}</option>
+    const renderSemesters = props.semesterList.map((semester, index) => {
+        if (curSem === semester.semester) {
+            console.log("AAA")
+            return <option key={index} value={semester.semester} selected>{semester.semester}</option>
+        } else {
+            return <option key={index} value={semester.semester}>{semester.semester}</option>
+        }
     })
 
     const semesterUpdate = (newSemester) => {
         setOpenAdd(!OpenAdd)
-        setSemesters(Semesters.concat(newSemester))
+        props.addSemester(newSemester)
+        props.refreshFunction(newSemester)
     }
 
     const handleSemester = (e) => {

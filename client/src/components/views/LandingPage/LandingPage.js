@@ -5,13 +5,16 @@ import ImageSlider from '../../utils/ImageSlider';
 import Like from '../DetailPostPage/Sections/Like';
 import Sider from './Sections/Sider'
 import { MessageOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
 function LandingPage() {
+    const user = useSelector(state => state.user)
     const [Posts, setPosts] = useState([])
-    const [Semester, setSemester] = useState("2021S")
+    const [Semester, setSemester] = useState(user.userData?.semester)
     const [userList, setuserList] = useState([]);
+    const [SemesterList, setSemesterList] = useState([])
 
     const variable = {
         semester: Semester
@@ -37,11 +40,24 @@ function LandingPage() {
                 }
             })
 
+        Axios.post('/api/semesters/getSemesters')
+            .then(response => {
+                if (response.data.success) {
+                    setSemesterList(response.data.semesters)
+                } else {
+                    alert('Failed to fectch product datas')
+                }
+            })
+
     }, [Semester])
 
     const updateSemester = (selectSemester) => {
         setSemester(selectSemester)
         console.log("updateSemester");
+    }
+
+    const addSemester = (newSemester) => {
+        setSemesterList([...SemesterList, newSemester])
     }
 
     const renderCards = Posts.map((post, index) => {
@@ -50,7 +66,7 @@ function LandingPage() {
             <Card 
                 title={<div style={{maxHeight: '30px'}}> 
                     <a href={`/users/${post.writer._id}`} style={{color: 'black'}}>
-                        <div style={{display: 'inline'}}><Avatar src={`http://192.249.18.171:80/${post.writer.image}`}/></div> 
+                        <div style={{display: 'inline'}}><Avatar src={`http://192.249.18.120:80/${post.writer.image}`}/></div> 
                         <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
                     </a>
                 </div>}
@@ -77,7 +93,7 @@ function LandingPage() {
         <div style={{ marginLeft: '270px', marginRight: '270px', marginTop: '20px' }}>
             <Row>
                 <Col xs={0} sm={0} md={6} lg={8}>
-                    <Sider refreshFunction={updateSemester} userList={userList}/>
+                    <Sider refreshFunction={updateSemester} userList={userList} semesterList={SemesterList} addSemester={addSemester}/>
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={16} >
                     {Posts.length === 0 ?
