@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Layout, Menu, Button } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Slider(props) {
-    
+
     const user = useSelector(state => state.user)
     const [OpenAdd, setOpenAdd] = useState(false)
     const [Semesters, setSemesters] = useState([])
@@ -47,26 +47,26 @@ function Slider(props) {
         props.refreshFunction(strSemester);
     };
 
-    
+
 
     return (
         <div>
             {!OpenAdd ?
-                <Sider style={{position: 'fixed'}}>
+                <Sider style={{ overflow: 'auto', position: 'fixed', height: '50%', right: 270 }}>
                     {(user.userData?._id === "60f412af929e365e2571ee02" || user.userData?._id === "60f41e58e16c3633167c1605") && (
                         <div>
-                            <Button onClick={semesterUpdate} style={{width:"100%"}}>Semester Add</Button> 
+                            <Button onClick={semesterUpdate} style={{ width: "100%" }}>Semester Add</Button>
                         </div>
                     )}
                     <div>
-                        <select name="semesters" id="semester-select" onChange={handleSemester} style={{width:"100%"}}>
+                        <select name="semesters" id="semester-select" onChange={handleSemester} style={{ width: "100%" }}>
                             {renderSemesters}
                         </select>
-                        <UserListPage semester={curSem} userList={props.userList}/>
+                        <UserListPage semester={curSem} userList={props.userList} />
                     </div>
                 </Sider>
                 :
-                <SemesterAddPage refreshFunction={semesterUpdate}/>
+                <SemesterAddPage refreshFunction={semesterUpdate} />
             }
         </div>
     )

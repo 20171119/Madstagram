@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const { auth } = require("../middleware/auth");
 
 //=================================
@@ -21,18 +24,6 @@ router.get("/auth", auth, (req, res) => {
     });
 });
 
-router.post("/register", (req, res) => {
-    console.log('/user/register')
-    console.log(req.body)
-    const user = new User(req.body);
-
-    user.save((err, doc) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-            success: true
-        });
-    });
-});
 
 router.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -73,8 +64,8 @@ router.post("/getUsers", (req, res) => {
 
     User.find()
         .exec((err, users) => {
-            if(err) return res.status(400).json({success: false})
-            return res.status(200).json({success: true, users})
+            if (err) return res.status(400).json({ success: false })
+            return res.status(200).json({ success: true, users })
         })
 
 });
@@ -84,25 +75,24 @@ router.post("/user_by_id", (req, res) => {
     let userId = req.body.userId
     console.log(userId)
     //we need to find the product information that belong to product Id 
-    User.findOne({"_id": userId})
+    User.findOne({ "_id": userId })
         .exec((err, user) => {
             console.log("in func    " + user)
             if (err) return res.status(400).send(err)
-            return res.status(200).json({success: true, user})
+            return res.status(200).json({ success: true, user })
         })
 });
 
 router.post("/semester", (req, res) => {
-    User.find({"semester": req.body.semester})
+    User.find({ "semester": req.body.semester })
         .exec((err, users) => {
-            if(err) return res.status(400).json({success: false})
-            return res.status(200).json({success: true, users})
+            if (err) return res.status(400).json({ success: false })
+            return res.status(200).json({ success: true, users })
         })
 
 });
 
 router.put("/update", (req, res) => {
-
     console.log("/user/update")
     console.log(req.body)
     let filter = {
@@ -116,20 +106,37 @@ router.put("/update", (req, res) => {
         "semester": req.body.semester
     }
 
-    User.findOneAndUpdate(
-        filter,
-        update,
-        {
-            new: true
-        },
-        (err, user) => {
-            console.log('user/update')
-            console.log(user)
-            if (err) return res.status(400).send(err)
-            return res.status(200).json({success: true, user})
-        }
+    User.findOneAndUpdate(filter, update, { new: true }, (err, user) => {
+        console.log("useruseruseruser " , user)
+        bcrypt.genSalt(saltRounds, function(err, salt){
+            if(err) return next(err);
+    
+            bcrypt.hash(user.password, salt, function(err, hash){
+                if(err) return next(err);
+                user.password = hash
+                console.log("USER USER USER ", user)
+                if (err) return res.json({ success: false, err });
+                return res.status(200).json({
+                    success: true, user
+                });
+            })
+        })
         
-    )
+        
+    })    
 })
+
+router.post("/register", (req, res) => {
+    console.log('/user/register')
+    console.log(req.body)
+    const user = new User(req.body);
+
+    user.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        });
+    });
+});
 
 module.exports = router;

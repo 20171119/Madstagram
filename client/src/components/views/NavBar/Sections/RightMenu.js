@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Menu, Avatar, Button, Dropdown } from 'antd';
+import { Menu, Avatar, Button, Dropdown, Divider } from 'antd';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
@@ -25,6 +25,7 @@ function RightMenu(props) {
       <Menu.Item>
         <a href={`/users/${user.userData?._id}`} >Profile</a>
       </Menu.Item>
+      <Menu.Divider />
       <Menu.Item>
         <a style={{color: 'red'}} onClick={logoutHandler}>Logout</a>
       </Menu.Item>
@@ -37,6 +38,7 @@ function RightMenu(props) {
             <Button type="text">
               <a href="/login">Signin</a>
             </Button>
+            
             <Button type="text">
               <a href="/register">Signup</a>
             </Button>
@@ -44,12 +46,12 @@ function RightMenu(props) {
     )
   } else {
     return (
-        <div style={{marginTop: '10px'}}>
+        <div style={{marginTop: '7px'}}>
           <a href="/posts/upload">
             <Avatar size='large' style={{backgroundColor: '#ffffff', color: 'black'}} icon={<FormOutlined />} />
           </a>
-          <Dropdown overlay={menu}>
-            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.171:80/${user.userData?.image}`} />
+          <Dropdown overlay={menu} trigger={['click']}>
+            <Avatar style={{marginLeft: '8px'}} key="profile" src={`http://192.249.18.171:80/${user.userData?.image}`} />
           </Dropdown>
         </div>
     )

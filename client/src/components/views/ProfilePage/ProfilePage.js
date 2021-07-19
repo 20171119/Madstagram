@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Axios from 'axios';
 import { Col, Card, Row, Divider , Menu, Avatar, Empty, Button, Descriptions } from 'antd';
 import ImageSlider2 from '../../utils/ImageSlider2';
@@ -8,6 +9,8 @@ const { SubMenu } = Menu;
 const { Meta } = Card;
 
 function ProfilePage(props) {
+    const user = useSelector(state => state.user)
+
     const userId = props.match.params.userId
 
     const [Posts, setPosts] = useState([])
@@ -75,14 +78,16 @@ function ProfilePage(props) {
                         <Row >
                             <Col lg={8}>
                                 <div align='center'>
-                                <Avatar size={120} src={`http://192.249.18.171:80/${User.image}`} />
+                                <Avatar size={150} src={`http://192.249.18.171:80/${User.image}`} />
                                 </div>                    
                             </Col>
 
                             <Col lg={16}>
                                 <Descriptions 
                                     title={User.name}
-                                    extra={<Button onClick={updatePost}>프로필  수정</Button> }
+                                    extra={user.userData?._id == userId ? 
+                                        <Button onClick={updatePost}>프로필  수정</Button> :
+                                        <div></div> } 
                                     colon>
                                     <Descriptions.Item label="Posts">{Posts.length}</Descriptions.Item>
                                     <Descriptions.Item label="Semester">{User.semester}</Descriptions.Item>
@@ -96,7 +101,10 @@ function ProfilePage(props) {
                     <div style={{marginTop: '30px'}}>
                         {Posts.length === 0 ?
                             <Empty>
-                                <Button type="primary" href="/posts/upload">Upload Post</Button>
+                                {user.userData?._id == userId ? 
+                                <Button type="primary" href="/posts/upload">Upload Post</Button> :
+                                <div></div> } 
+                                
                             </Empty> :
                             <Row gutter={[32, 32]}>
                                 {renderCards}

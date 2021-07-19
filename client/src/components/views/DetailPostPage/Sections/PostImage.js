@@ -19,7 +19,7 @@ function PostImage(props) {
     }, [props.detail])
 
     return (
-        <div>
+        <div >
             <ImageGallery items={Images} />
         </div>
     )

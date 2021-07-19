@@ -74,12 +74,9 @@ function LandingPage() {
 
 
     return (
-        <div style={{ marginLeft: '270px', marginRight: '270px', marginTop: '20px' }}>
+        <div style={{ marginLeft: '288px', marginRight: '270px', marginTop: '20px' }}>
             <Row>
-                <Col xs={0} sm={0} md={6} lg={8}>
-                    <Sider refreshFunction={updateSemester} userList={userList}/>
-                </Col>
-                <Col xs={24} sm={24} md={18} lg={16} >
+                <Col xs={24} sm={24} md={18} lg={15} >
                     {Posts.length === 0 ?
                         <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                             <h2>No post yet...</h2>
@@ -89,7 +86,9 @@ function LandingPage() {
                         </div>
                     }
                 </Col>
-
+                <Col xs={0} sm={0} md={6} lg={9}>
+                    <Sider refreshFunction={updateSemester} userList={userList}/>
+                </Col>
             </Row>
         </div>
     )

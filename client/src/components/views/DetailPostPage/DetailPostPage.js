@@ -4,7 +4,7 @@ import PostImage from './Sections/PostImage';
 import PostInfo from './Sections/PostInfo';
 import Comments from './Sections/Comments.js'
 // import PostButton from './Sections/PostButton.js'
-import { Row, Col, Button} from 'antd';
+import { Row, Col, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import UpdatePage from '../UpdatePage/UpdatePage';
@@ -18,7 +18,7 @@ function DetailPostPage(props) {
     const [Writer, setWriter] = useState()
     const [OpenUpdate, setOpenUpdate] = useState(false)
     const [VisibleBtn, setVisibleBtn] = useState(true)
-    
+
     const postVariable = {
         postId: postId
     }
@@ -39,8 +39,8 @@ function DetailPostPage(props) {
                 }
             })
     }, [])
-        
-            
+
+
     const updateComment = (newComment) => {
         setCommentLists(CommentLists.concat(newComment))
     }
@@ -54,16 +54,16 @@ function DetailPostPage(props) {
 
     const deletePost = (e) => {
         if (window.confirm("Really Delete?") == true) {
-            Axios.delete('/api/posts/delete', {data: {postId: postId}, withCredentials: true})
-            .then(response => {
-                if (response.data.success) {
-                    // props.refreshFunction(response.data.post)
-                    alert("Succesfully Delete")
-                    props.history.push("/");
-                } else {
-                    alert('Failed to save Comment')
-                }
-            })
+            Axios.delete('/api/posts/delete', { data: { postId: postId }, withCredentials: true })
+                .then(response => {
+                    if (response.data.success) {
+                        // props.refreshFunction(response.data.post)
+                        alert("Succesfully Delete")
+                        props.history.push("/");
+                    } else {
+                        alert('Failed to save Comment')
+                    }
+                })
         }
     }
 
@@ -75,31 +75,33 @@ function DetailPostPage(props) {
     return (
         <div className="postPage" style={{ marginLeft: '270px', marginRight: '270px' }}>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
                 <h1>{Posts?.title}</h1>
             </div>
+
             <br />
-                {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                    <Button onClick={deletePost}>Delete</Button>
-                }
-                {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                    <Button onClick={updatePost}>Update</Button>
-                }
-                {!OpenUpdate && (
-                    <Row gutter={[16, 16]} >
-                        <Col lg={12} xs={24}>
-                            <PostImage detail={Posts} style={{position: 'fixed'}}/>
-                            <Like post postId={postId} userId={localStorage.getItem('userId')} style={{position: 'fixed'}}/>
-                        </Col>
-                        <Col lg={12} xs={24}>
-                            <PostInfo detail={Posts} writer={Posts.writer}/>
-                            <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment}/>
-                        </Col>
-                    </Row>
-                )}
-                {OpenUpdate &&
-                    <UpdatePage user={user} post={Posts}></UpdatePage>
-                }
+
+            {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
+                <Button onClick={deletePost}>Delete</Button>
+            }
+            {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
+                <Button onClick={updatePost}>Update</Button>
+            }
+            {!OpenUpdate && (
+                <Row gutter={[16, 16]} >
+                    <Col lg={12} xs={24} >
+                        <PostImage detail={Posts} />
+                        <Like post postId={postId} userId={localStorage.getItem('userId')} style={{ position: 'fixed' }} />
+                    </Col>
+                    <Col lg={12} xs={24}>
+                        <PostInfo detail={Posts} writer={Posts.writer} />
+                        <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
+                    </Col>
+                </Row>
+            )}
+            {OpenUpdate &&
+                <UpdatePage user={user} post={Posts}></UpdatePage>
+            }
         </div>
     )
 }
