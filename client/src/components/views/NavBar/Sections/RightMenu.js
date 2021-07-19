@@ -49,7 +49,7 @@ function RightMenu(props) {
             <Avatar size='large' style={{backgroundColor: '#ffffff', color: 'black'}} icon={<FormOutlined />} />
           </a>
           <Dropdown overlay={menu}>
-            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.120:80/${user.userData?.image}`} />
+            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.171:80/${user.userData?.image}`} />
           </Dropdown>
         </div>
     )

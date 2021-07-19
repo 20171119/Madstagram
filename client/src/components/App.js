@@ -12,7 +12,7 @@ import ProfilePage from "./views/ProfilePage/ProfilePage";
 import { Layout, Menu } from 'antd';
 import io from 'socket.io-client';
 
-// const socket = io.connect('http://192.249.18.120:80')
+// const socket = io.connect('http://192.249.18.171:80')
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
