@@ -19,7 +19,7 @@ function PostInfo(props) {
         <div>
             <Row>
                 <Col lg={4}>
-                    <Avatar size={40} src={`http://192.249.18.171:80/${Post.writer?.image}`}/>
+                    <Avatar size={40} src={`http://192.249.18.120:80/${Post.writer?.image}`}/>
                 </Col>
                 <Col lg={8}>
                     <p>{Post.writer?.name}</p>
