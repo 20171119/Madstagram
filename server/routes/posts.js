@@ -46,7 +46,6 @@ router.post("/uploadPosts", (req, res) => {
     console.log("/posts/uploadPosts")
     //save all the data we got from the client into the DB 
     const post = new Post(req.body)
-    console.log(req.body);
     post.save((err) => {
         if (err) return res.status(400).json({ success: false, err })
         return res.status(200).json({ success: true })
@@ -56,8 +55,9 @@ router.post("/uploadPosts", (req, res) => {
 
 // auth 빠짐
 router.post("/getPosts", (req, res) => {
-    console.log("/posts/getPosts");
+    // console.log("/posts/getPosts");
     Post.find({ 'semester': req.body.semester })
+        .sort({createdAt: -1})
         .populate("writer")
         .exec((err, posts) => {
             console.log(posts);
@@ -70,7 +70,7 @@ router.post("/getPosts", (req, res) => {
 router.post("/post_by_id", (req, res) => {
     console.log('post_by_id')
     let postId = req.body.postId
-    console.log(postId)
+    // console.log(postId)
     //we need to find the product information that belong to product Id 
     Post.findOne({"_id": postId})
         .populate('writer')
@@ -83,7 +83,7 @@ router.post("/post_by_id", (req, res) => {
 router.post("/posts_by_user", (req, res) => {
     console.log('posts_by_user')
     let userId = req.body.userId
-    console.log("in the posts_by_user" + userId)
+    // console.log("in the posts_by_user" + userId)
     //we need to find the product information that belong to product Id 
     Post.find({"writer": userId})
         .populate('writer')

@@ -18,7 +18,7 @@ function FileUpload(props) {
         //save the Image we chose inside the Node Server 
         Axios.post('/api/posts/uploadImage', formData, config)
             .then(response => {
-                console.log(response.data);
+
                 if (response.data.success) {
                     // console.log(response.data);
                     setImages([...Images, response.data.image])
@@ -62,14 +62,13 @@ function FileUpload(props) {
                 )}
             </Dropzone>
 
-            <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
+            <div style={{ display: 'flex', width: '350px', height: '240px' }}>
 
                 {Images.map((image, index) => (
                     <div key={index} onClick={() => onDelete(image)}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://192.249.18.120:80/${image}`} alt={`productImg-${index}`} />
+                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://192.249.18.171:80/${image}`} alt={`productImg-${index}`} />
                     </div>
                 ))}
-
 
             </div>
 

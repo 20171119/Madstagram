@@ -23,7 +23,6 @@ function SemesterAddPage(props) {
             .then(response => {
                 if (response.data.success) {
                     alert('Semester Successfully create')
-                    console.log(response.data)
                     props.refreshFunction(response.data.semester);
                 } else {
                     alert('Failed to create semester')
@@ -34,7 +33,6 @@ function SemesterAddPage(props) {
 
     return (
         <div>
-            SemesterAddPage
             <Form onSubmit={onSubmit} >
                 <label>Semester Name</label>
                 <TextArea

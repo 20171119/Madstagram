@@ -28,7 +28,6 @@ function DetailPostPage(props) {
             .then(response => {
                 setPosts(response.data.post)
                 setWriter(response.data.post.writer)
-                console.log(response.data.post.writer)
             })
 
         Axios.post('/api/comments/getComments', postVariable)
@@ -77,20 +76,20 @@ function DetailPostPage(props) {
         <div className="postPage" style={{ marginLeft: '270px', marginRight: '270px' }}>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h1>{Posts.title}</h1>
+                <h1>{Posts?.title}</h1>
             </div>
             <br />
-                {Posts.writer?._id === user.userData?._id && VisibleBtn &&
+                {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
                     <Button onClick={deletePost}>Delete</Button>
                 }
-                {Posts.writer?._id === user.userData?._id && VisibleBtn &&
+                {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
                     <Button onClick={updatePost}>Update</Button>
                 }
                 {!OpenUpdate && (
                     <Row gutter={[16, 16]} >
                         <Col lg={12} xs={24}>
-                            <PostImage detail={Posts} />
-                            <Like post postId={postId} userId={localStorage.getItem('userId')}></Like>
+                            <PostImage detail={Posts} style={{position: 'fixed'}}/>
+                            <Like post postId={postId} userId={localStorage.getItem('userId')} style={{position: 'fixed'}}/>
                         </Col>
                         <Col lg={12} xs={24}>
                             <PostInfo detail={Posts} writer={Posts.writer}/>
