@@ -51,7 +51,7 @@ function LandingPage() {
             <Card 
                 title={<div style={{maxHeight: '30px'}}> 
                     <a href={`/users/${post.writer._id}`} style={{color: 'black'}}>
-                        <div style={{display: 'inline'}}><Avatar src={`http://192.249.18.120:80/${post.writer.image}`}/></div> 
+                        <div style={{display: 'inline'}}><Avatar src={`http://192.249.18.171:80/${post.writer.image}`}/></div> 
                         <div style={{display: 'inline', marginLeft: '10px'}}>{post.writer.name}</div>
                     </a>
                 </div>}

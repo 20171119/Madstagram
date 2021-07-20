@@ -113,11 +113,11 @@ function DetailPostPage(props) {
             )}
             {!OpenUpdate && Posts.images?.length !== 0  && (
                 <Row gutter={[16, 16]} >
-                    <Col lg={11} xs={24} >
+                    <Col lg={12} xs={24} >
                         <PostImage detail={Posts} />
                         <Like post postId={postId} userId={localStorage.getItem('userId')} style={{ position: 'fixed' }} />
                     </Col>
-                    <Col lg={2} xs={2}/>
+                    <Col lg={1} xs={2}/>
                     <Col lg={11} xs={24}>
                         {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
                             <Dropdown overlay={menu}>
