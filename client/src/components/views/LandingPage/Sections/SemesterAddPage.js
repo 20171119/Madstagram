@@ -33,16 +33,17 @@ function SemesterAddPage(props) {
 
     return (
         <div>
-            <Form onSubmit={onSubmit} >
-                <label>Semester Name</label>
-                <TextArea
+            <Form onSubmit={onSubmit} style={{marginLeft: "10px", marginTop: "20px"}}>
+                <Input
                     onChange={onSemesterChange}
                     value={Semester}
+                    placeholder="Input Semester"
                 />
                 <br />
                 <br />
                 <Button
                     onClick={onSubmit}
+                    style={{width: "100%"}}
                 >
                     Submit
                 </Button>

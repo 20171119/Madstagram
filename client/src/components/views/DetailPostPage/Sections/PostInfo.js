@@ -22,13 +22,13 @@ function PostInfo(props) {
                     <Avatar size={40} src={`http://192.249.18.120:80/${Post.writer?.image}`}/>
                 </Col>
                 <Col lg={8}>
-                    <p>{Post.writer?.name}</p>
+                    <p style={{marginTop:'7px'}}>{Post.writer?.name}</p>
                 </Col>
             </Row>
             <br/>
             <Row>
-                <p>{Post.title}</p><br/>
-                <p>{Post.content}</p>
+                <p>{Post.title}<br/><br/>
+                {Post.content}</p>
             </Row>
         </div>
     )

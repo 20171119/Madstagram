@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Tooltip} from 'antd';
 import {
   HeartOutlined,
-  HeartFilled
+  HeartFilled,
 } from '@ant-design/icons';
 import Axios from 'axios';
 
@@ -43,8 +43,6 @@ function Like(props) {
                     alert('Failed to get likes')
                 }
             })
-
-
     }, [])
 
 

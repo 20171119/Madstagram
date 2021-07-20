@@ -15,7 +15,6 @@ function DetailPostPage(props) {
     const postId = props.match.params.postId
     const [Posts, setPosts] = useState([])
     const [CommentLists, setCommentLists] = useState([])
-    const [Writer, setWriter] = useState()
     const [OpenUpdate, setOpenUpdate] = useState(false)
     const [VisibleBtn, setVisibleBtn] = useState(true)
 
@@ -27,7 +26,6 @@ function DetailPostPage(props) {
         Axios.post('/api/posts/post_by_id', postVariable)
             .then(response => {
                 setPosts(response.data.post)
-                setWriter(response.data.post.writer)
             })
 
         Axios.post('/api/comments/getComments', postVariable)
@@ -72,28 +70,38 @@ function DetailPostPage(props) {
         setVisibleBtn(!setVisibleBtn);
     }
 
+    console.log('BBB', Posts.images)
+
     return (
         <div className="postPage" style={{ marginLeft: '270px', marginRight: '270px' }}>
-
-            <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-                <h1>{Posts?.title}</h1>
-            </div>
-
             <br />
 
             {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                <Button onClick={deletePost}>Delete</Button>
+                <Button onClick={deletePost} style={{marginBottom:'30px'}}>Delete</Button>
             }
             {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                <Button onClick={updatePost}>Update</Button>
+                <Button onClick={updatePost} style={{marginBottom:'30px'}}>Update</Button>
             }
-            {!OpenUpdate && (
+            {!OpenUpdate && Posts.images?.length === 0 && (
+                <Row gutter={[16, 16]} style={{display: 'center'}}>
+                    <Col lg={11} xs={24}>
+                        <PostInfo detail={Posts} writer={Posts.writer}/>
+                        <Like post postId={postId} userId={localStorage.getItem('userId')} style={{ position: 'fixed' }} />
+                    </Col>
+                    <Col lg={2} xs={2}/>
+                    <Col lg={11} xs={24}>
+                        <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
+                    </Col>
+                </Row>
+            )}
+            {!OpenUpdate && Posts.images?.length !== 0  && (
                 <Row gutter={[16, 16]} >
-                    <Col lg={12} xs={24} >
+                    <Col lg={11} xs={24} >
                         <PostImage detail={Posts} />
                         <Like post postId={postId} userId={localStorage.getItem('userId')} style={{ position: 'fixed' }} />
                     </Col>
-                    <Col lg={12} xs={24}>
+                    <Col lg={2} xs={2}/>
+                    <Col lg={11} xs={24}>
                         <PostInfo detail={Posts} writer={Posts.writer} />
                         <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
                     </Col>

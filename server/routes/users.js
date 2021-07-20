@@ -93,7 +93,6 @@ router.post("/semester", (req, res) => {
 router.put("/update", async (req, res) => {
 
     console.log("/user/update");
-    console.log(req.body);
     let filter = {
         "_id": req.body.userId
     };
@@ -121,31 +120,6 @@ router.put("/update", async (req, res) => {
                 return res.status(200).json({success: true, user})
         }
     )
-
-    // bcrypt.hash(
-    //     update["password"], 
-    //     10,
-    //     (err, hash) => {
-    //         if(err) return res.status(400).send(err)
-    //         console.log("A2", hash)
-    //         update["password"] = hash;
-    //         console.log("A3", update)
-    //     }
-    // ).then(async ()=> {
-    //     await User.findOneAndUpdate(
-    //         filter,
-    //         update,
-    //         {
-    //             new: true
-    //         },
-    //         (err, user) => {
-    //             console.log('user/update')
-    //             console.log(user)
-    //             if (err) return res.status(400).send(err)
-    //             return res.status(200).json({success: true, user})
-    //         }
-    //     )
-    // });
 });
 
 

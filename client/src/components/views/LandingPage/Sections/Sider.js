@@ -53,7 +53,7 @@ function Slider(props) {
         <div>
             {!OpenAdd ?
                 <Sider style={{ overflow: 'auto', position: 'fixed', height: '50%', right: 270 }}>
-                    {(user.userData?._id === "60f412af929e365e2571ee02" || user.userData?._id === "60f41e58e16c3633167c1605") && (
+                    {(user.userData?._id === "60f593a2782ea21e20c6a95b" || user.userData?._id === "60f597360aab566d36e17c0c") && (
                         <div>
                             <Button onClick={semesterUpdate} style={{ width: "100%" }}>Semester Add</Button>
                         </div>

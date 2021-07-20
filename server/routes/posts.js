@@ -60,7 +60,6 @@ router.post("/getPosts", (req, res) => {
         .sort({updatedAt: -1})
         .populate("writer")
         .exec((err, posts) => {
-            console.log(posts);
             if(err) return res.status(400).json({success: false})
             return res.status(200).json({success: true, posts})
         })
@@ -104,7 +103,6 @@ router.delete("/delete", (req, res) => {
 
 router.put("/update", (req, res) => {
 
-    console.log(req.body)
     let filter = {
         "_id": req.body.postId
     }
@@ -123,7 +121,6 @@ router.put("/update", (req, res) => {
         },
         (err, post) => {
             console.log('post/update')
-            console.log(post)
             if (err) return res.status(400).send(err)
             return res.status(200).json({success: true, post})
         }

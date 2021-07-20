@@ -4,7 +4,7 @@ import { Col, Card, Row, Avatar } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import Like from '../DetailPostPage/Sections/Like';
 import Sider from './Sections/Sider'
-import { MessageOutlined } from '@ant-design/icons';
+import CommentNum from '../DetailPostPage/Sections/CommentNum';
 
 const { Meta } = Card;
 
@@ -16,6 +16,7 @@ function LandingPage() {
     const variable = {
         semester: Semester
     }
+
     useEffect(() => {
         Axios.post('/api/posts/getPosts', variable)
             .then(response => {
@@ -59,7 +60,7 @@ function LandingPage() {
                 hoverable={true}
                 actions={[
                     <Like post postId={post._id} userId={localStorage.getItem('userId')}></Like>,
-                    <a href={`/posts/${post._id}`} ><MessageOutlined key="edit" /></a>
+                    <CommentNum postId={post._id}></CommentNum>
                 ]}
                 cover={<ImageSlider images={post.images} />}
             >
