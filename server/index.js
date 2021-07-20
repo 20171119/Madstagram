@@ -8,11 +8,13 @@ const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
 
-// const mongoose = require("mongoose");
-// mongoose
-//   .connect(config.mongoURI, { useNewUrlParser: true })
-//   .then(() => console.log("DB connected"))
-//   .catch(err => console.error(err));
+const http = require('http')
+const server = require('http').createServer(app)
+const io = require("socket.io")(server);
+
+// io.sockets.on('connection', (socket) => {
+//   console.log(`Socket connected : ${socket.id}`)
+// })
 
 const mongoose = require("mongoose");
 const connect = mongoose.connect(config.mongoURI,
@@ -38,11 +40,16 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/comments', require('./routes/comments'));
+app.use('/api/likes', require('./routes/likes'));
+app.use('/api/semesters', require('./routes/semesters'));
+app.use('/uploads', express.static('uploads'));
 
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

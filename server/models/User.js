@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const moment = require("moment");
@@ -18,15 +18,14 @@ const userSchema = mongoose.Schema({
         type: String,
         minglength: 5
     },
-    lastname: {
-        type:String,
-        maxlength: 50
-    },
     role : {
         type:Number,
         default: 0 
     },
     image: String,
+    semester: {
+        type: String
+    },
     token : {
         type: String,
     },
@@ -55,6 +54,26 @@ userSchema.pre('save', function( next ) {
     }
 });
 
+userSchema.pre('update', function( next ) {
+    var user = this;
+    
+    if(user.isModified('password')){    
+        console.log('password changed')
+        bcrypt.genSalt(saltRounds, function(err, salt){
+            if(err) return next(err);
+    
+            bcrypt.hash(user.password, salt, function(err, hash){
+                if(err) return next(err);
+                user.password = hash 
+                next()
+            })
+        })
+    } else {
+        console.log('password not changed')
+        next()
+    }
+});
+
 userSchema.methods.comparePassword = function(plainPassword,cb){
     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
         if (err) return cb(err);
@@ -64,8 +83,8 @@ userSchema.methods.comparePassword = function(plainPassword,cb){
 
 userSchema.methods.generateToken = function(cb) {
     var user = this;
-    console.log('user',user)
-    console.log('userSchema', userSchema)
+    // console.log('user',user)
+    // console.log('userSchema', userSchema)
     var token =  jwt.sign(user._id.toHexString(),'secret')
     var oneHour = moment().add(1, 'hour').valueOf();
 
