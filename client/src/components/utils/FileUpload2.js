@@ -4,6 +4,7 @@ import {
     PlusOutlined
 } from '@ant-design/icons';
 import Axios from 'axios';
+import "./FileUpload.css";
 function FileUpload2(props) {
 
     const [Image, setImage] = useState("")
@@ -56,7 +57,7 @@ function FileUpload2(props) {
                         {...getRootProps()}
                     >
                         <input {...getInputProps()} />
-                        <PlusOutlined style={{ fontSize: '3rem' }} />
+                        <PlusOutlined style={{ fontSize: '3rem', cursor: 'pointer'}} class="plusoutlined"/>
 
                     </div>
                 )}

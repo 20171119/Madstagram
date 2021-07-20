@@ -19,15 +19,16 @@ function PostInfo(props) {
         <div>
             <Row>
                 <Col >
-                    <Avatar size={34} src={`http://192.249.18.171:80/${Post.writer?.image}`}/>
+                    <Avatar size={32} src={`http://192.249.18.171:80/${Post.writer?.image}`} />
                 </Col>
-                <Col style={{marginLeft: '20px', marginTop: '5px'}}>
-                    <p>{Post.writer?.name}</p>
+                <Col lg={8}>
+                    <p style={{ marginTop: '4px', marginLeft: '8px' }}>{Post.writer?.name}</p>
                 </Col>
             </Row>
-            <br/>
+            <br />
             <Row>
-                <p>{Post.content}</p>
+                <p>{Post.title}<br /><br />
+                    {Post.content}</p>
             </Row>
         </div>
     )

@@ -56,7 +56,6 @@ router.post("/getSemester", (req, res) => {
 router.delete("/delete", (req, res) => {
     console.log('post_delete')
     let postIds = req.body._id
-    console.log(postIds)
     Semester.findOneAndDelete({"_id": postIds}, (err, semester) => {
         if (err) return res.status(400).send(err)
         return res.status(200).send(semester)

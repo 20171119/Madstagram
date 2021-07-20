@@ -6,7 +6,6 @@ import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { FormOutlined } from '@ant-design/icons';
-import SemesterAddPage2 from '../../LandingPage/Sections/SemesterAddPage2';
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
