@@ -63,13 +63,19 @@ function FileUpload(props) {
                 )}
             </Dropzone>
 
-            <div style={{ display: 'flex', width: '350px', height: '240px' }}>
+            <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll'}}>
 
-                {Images.map((image, index) => (
+                {Images && Images.map((image, index) => (
                     <div key={index} onClick={() => onDelete(image)}>
-                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://192.249.18.120:80/${image}`} alt={`productImg-${index}`} />
+                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src={`http://192.249.18.120:80/${image}`}/>
                     </div>
                 ))}
+
+                {!Images && (
+                    <div>
+                        <img style={{ minWidth: '300px', width: '300px', height: '240px' }} src="error" />
+                    </div>
+                )}
 
             </div>
 
