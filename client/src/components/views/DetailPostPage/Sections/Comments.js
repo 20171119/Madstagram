@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Input } from 'antd';
 import axios from 'axios';
-import {
-    MessageOutlined
-} from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
@@ -53,7 +50,6 @@ function Comments(props) {
             ))}
             
             <br/>
-            <MessageOutlined/>
             {/* Root Comment Form */}
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                 <TextArea
