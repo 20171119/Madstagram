@@ -77,7 +77,7 @@ function SingleComment(props) {
                 author={props.comment.writer?.name}
                 avatar={
                     <Avatar
-                        src={`http://192.249.18.120:80/${props.comment.writer?.image}`}
+                        src={`http://192.249.18.171:80/${props.comment.writer?.image}`}
                         alt="image"
                     />
                 }

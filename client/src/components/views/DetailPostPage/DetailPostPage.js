@@ -93,7 +93,7 @@ function DetailPostPage(props) {
                         <PostImage detail={Posts} />
                         <Like post postId={postId} userId={localStorage.getItem('userId')} style={{ position: 'fixed' }} />
                     </Col>
-                    <Col lg={12} xs={24}>
+                    <Col lg={12} xs={24} >
                         <PostInfo detail={Posts} writer={Posts.writer} />
                         <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
                     </Col>

@@ -51,13 +51,8 @@ function RightMenu(props) {
           <a href="/posts/upload">
             <Avatar size='large' style={{backgroundColor: '#ffffff', color: 'black'}} icon={<FormOutlined />} />
           </a>
-<<<<<<< HEAD
           <Dropdown overlay={menu} trigger={['click']}>
             <Avatar style={{marginLeft: '8px'}} key="profile" src={`http://192.249.18.171:80/${user.userData?.image}`} />
-=======
-          <Dropdown overlay={menu}>
-            <Avatar style={{marginLeft: '5px'}} key="profile" src={`http://192.249.18.120:80/${user.userData?.image}`} />
->>>>>>> a7e95d9bbec0fcd14fe32ae9f4142a198d0e07d0
           </Dropdown>
         </div>
     )

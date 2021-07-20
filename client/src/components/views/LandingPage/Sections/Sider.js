@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
-import { Layout, Menu, Button } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Layout, Menu, Button, Select, Divider, Input } from 'antd';
 import SemesterAddPage from './SemesterAddPage';
 import { useSelector } from 'react-redux';
 import UserListPage from './UserListPage';
-
+import { PlusOutlined } from '@ant-design/icons';
 const { Sider } = Layout;
+const { Option } = Select;
 const { SubMenu } = Menu;
 
 function Slider(props) {
@@ -15,6 +15,7 @@ function Slider(props) {
     const [OpenAdd, setOpenAdd] = useState(false)
     const [Semesters, setSemesters] = useState([])
     const [curSem, setcurSem] = useState("2021S")
+    const [New, setNew] = useState("")
 
     useEffect(() => {
         getSemesters();
@@ -32,7 +33,7 @@ function Slider(props) {
     }
 
     const renderSemesters = Semesters.map((semester, index) => {
-        return <option key={index} value={semester.semester}>{semester.semester}</option>
+        return <Option key={index} value={semester.semester}>{semester.semester}</Option>
     })
 
     const semesterUpdate = (newSemester) => {
@@ -41,33 +42,62 @@ function Slider(props) {
     }
 
     const handleSemester = (e) => {
-        var e = document.getElementById("semester-select");
-        var strSemester = e.value;
+        // var e = document.getElementById("semester-select");
+        console.log("handle ", e)
+        var strSemester = e;
         setcurSem(strSemester);
         props.refreshFunction(strSemester);
     };
 
+    const onNewChange = (event) => {
+        setNew(event.currentTarget.value);
+    };
 
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const variables = {
+            semester: New
+        }
+        Axios.post('/api/semesters/create', variables)
+            .then(response => {
+                if (response.data.success) {
+                    props.refreshFunction(response.data.semester);
+                    window.location.reload()
+                } else {
+                    alert('Failed to create semester')
+                }
+            })
+    }
 
     return (
         <div>
-            {!OpenAdd ?
-                <Sider style={{ overflow: 'auto', position: 'fixed', height: '50%', right: 270 }}>
-                    {(user.userData?._id === "60f412af929e365e2571ee02" || user.userData?._id === "60f41e58e16c3633167c1605") && (
+            <Sider style={{ overflow: 'auto', position: 'fixed', height: '50%', right: 270, backgroundColor: "#fafafa" }}>
+                <div>
+                    <Select name="semester-select" id="semester-select" defaultValue="2021S" onChange={handleSemester} style={{ width: "100%" }} dropdownRender={menu => (
                         <div>
-                            <Button onClick={semesterUpdate} style={{ width: "100%" }}>Semester Add</Button>
+                            {menu}
+                            {(user.userData?._id === "60f597360aab566d36e17c0c" || user.userData?._id === "60f593a2782ea21e20c6a95b") && (
+                                <div>
+                                    <Divider style={{margin: '4px 0'}} />
+                                    <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
+                                        <Input style={{ flex: 'auto' }} value={New} onChange={onNewChange} />
+                                        <a
+                                            style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
+                                            onClick={onSubmit}
+                                        > 
+                                            <PlusOutlined /> Add
+                                        </a>
+                                    </div>
+                                </div>                                    
+                            )}
                         </div>
-                    )}
-                    <div>
-                        <select name="semesters" id="semester-select" onChange={handleSemester} style={{ width: "100%" }}>
-                            {renderSemesters}
-                        </select>
-                        <UserListPage semester={curSem} userList={props.userList} />
-                    </div>
-                </Sider>
-                :
-                <SemesterAddPage refreshFunction={semesterUpdate} />
-            }
+                    )}>
+                        {renderSemesters}
+                    </Select>
+                    <UserListPage semester={curSem} userList={props.userList} />
+                </div>
+            </Sider>
         </div>
     )
 }
