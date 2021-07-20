@@ -4,11 +4,12 @@ import PostImage from './Sections/PostImage';
 import PostInfo from './Sections/PostInfo';
 import Comments from './Sections/Comments.js'
 // import PostButton from './Sections/PostButton.js'
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Menu, Dropdown } from 'antd';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import UpdatePage from '../UpdatePage/UpdatePage';
 import Like from './Sections/Like';
+import { DownOutlined, MoreOutlined } from '@ant-design/icons';
 
 function DetailPostPage(props) {
     const user = useSelector(state => state.user)
@@ -72,16 +73,25 @@ function DetailPostPage(props) {
 
     console.log('BBB', Posts.images)
 
+    const menu = (
+        <Menu>
+          <Menu.Item>
+            <a onClick={deletePost}>
+                Delete
+            </a>
+          </Menu.Item>
+          <Menu.Item>
+            <a onClick={updatePost}>
+                update
+            </a>
+          </Menu.Item>
+        </Menu>
+      );
+
     return (
         <div className="postPage" style={{ marginLeft: '270px', marginRight: '270px' }}>
             <br />
 
-            {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                <Button onClick={deletePost} style={{marginBottom:'30px'}}>Delete</Button>
-            }
-            {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
-                <Button onClick={updatePost} style={{marginBottom:'30px'}}>Update</Button>
-            }
             {!OpenUpdate && Posts.images?.length === 0 && (
                 <Row gutter={[16, 16]} style={{display: 'center'}}>
                     <Col lg={11} xs={24}>
@@ -90,6 +100,13 @@ function DetailPostPage(props) {
                     </Col>
                     <Col lg={2} xs={2}/>
                     <Col lg={11} xs={24}>
+                        {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
+                            <Dropdown overlay={menu}>
+                                <MoreOutlined style={{float: 'right'}}>
+                                    <DownOutlined />
+                                </MoreOutlined>
+                            </Dropdown>
+                        }
                         <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
                     </Col>
                 </Row>
@@ -102,6 +119,13 @@ function DetailPostPage(props) {
                     </Col>
                     <Col lg={2} xs={2}/>
                     <Col lg={11} xs={24}>
+                        {Posts?.writer?._id === user.userData?._id && VisibleBtn &&
+                            <Dropdown overlay={menu}>
+                                <MoreOutlined style={{float: 'right'}}>
+                                    <DownOutlined />
+                                </MoreOutlined>
+                            </Dropdown>
+                        }
                         <PostInfo detail={Posts} writer={Posts.writer} />
                         <Comments CommentLists={CommentLists} postId={Posts._id} refreshFunction={updateComment} deleteFunction={deleteComment} />
                     </Col>
